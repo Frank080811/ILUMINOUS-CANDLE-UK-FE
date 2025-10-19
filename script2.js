@@ -202,7 +202,7 @@ function initCartDelegation() {
 }
 
 // ------------------ Checkout ------------------
-const API_URL = "https://iluminous-candle-uk-be.onrender.com/";
+const API_URL = "https://iluminous-candle-uk-be.onrender.com";
 
 function initCheckoutForm() {
   const checkoutForm = $("#checkoutForm");
