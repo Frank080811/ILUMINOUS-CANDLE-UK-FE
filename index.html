@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Luminous Candles Ltd T/A Nelux Candles</title>
+  <link rel="stylesheet" href="styles.css"/>
+  <!-- Font Awesome CDN -->
+<link 
+  rel="stylesheet" 
+  href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" 
+  crossorigin="anonymous" 
+  referrerpolicy="no-referrer"
+/>
+
+  <script defer src="script2.js"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;700&family=Poppins:wght@400;500&display=swap" rel="stylesheet"/>
+<style>
+.products-grid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr); /* 5 products per row */
+  gap: 2rem; /* spacing between items */
+  margin-top: 2rem;
+}
+
+@media (max-width: 1200px) {
+  .products-grid {
+    grid-template-columns: repeat(3, 1fr); /* fallback to 3 per row on smaller screens */
+  }
+}
+
+@media (max-width: 768px) {
+  .products-grid {
+    grid-template-columns: repeat(2, 1fr); /* for tablets/small screens */
+  }
+}
+
+@media (max-width: 480px) {
+  .products-grid {
+    grid-template-columns: 1fr; /* single column for mobile */
+  }
+}
+
+</style>
+</head>
+<body>
+  <!-- Header -->
+  <header class="header">
+    <div class="container nav-container">
+		<div class="logo">
+			<a href="index.html">
+				<img src="images/LOGON.jpg" alt="Company Logo">
+			</a>
+		</div>
+      <nav class="navbar" aria-label="Main Navigation">
+        <ul>
+          <li><a href="index.html">Home</a></li>
+          <li><a href="categories.html#category-section">Shop</a></li>
+          <li><a href="categories.html#category-section">Collections</a></li>
+          <li><a href="#">About</a></li>
+          <li><a href="#contact-details">Contact</a></li>
+        </ul>
+      </nav>
+      <a href="#" class="btn" id="checkoutBtn">Checkout</a>
+      <button class="menu-toggle" aria-label="Toggle Menu">&#9776;</button>
+    </div>
+  </header>
+
+<!-- Hero Section -->
+<section class="hero">
+  <!-- Background Video -->
+  <video autoplay muted loop playsinline class="hero-video">
+    <source src="https://cdn.shopify.com/videos/c/o/v/97ca524a41754c60b057950b39d93c73.mp4" type="video/mp4"/>
+    Your browser does not support the video tag.
+  </video>
+
+  <!-- Overlay for readability -->
+  <div class="hero-overlay"></div>
+
+  <!-- Hero Content -->
+  <div class="hero-content">
+    <h2>Luminous Candles Ltd T/A Nelux Candles</h2>
+    <h1>
+      <span class="text-animate">Handcrafted <span>Candles</span> for Your Soul</span>
+      <span class="text-animate">Eco-Friendly <span>Luxury</span> in Every Jar</span>
+      <span class="text-animate">Fragrances that <span>Relax</span> &amp; Rejuvenate</span>
+    </h1>
+    <p>
+      Indulge your senses with our handcrafted luxury aromatherapy candles. Each candle is meticulously 
+      crafted using premium natural ingredients and essential oils, creating a soothing ambiance that promotes relaxation and rejuvenation.
+    </p>
+    <div class="hero-buttons">
+      <a href="categories.html#category-section" class="btn">Explore Collection</a>
+      <a href="#promo" class="btn-outline">Learn More</a>
+    </div>
+  </div>
+</section>
+
+<!-- === FEATURED PRODUCTS SECTION === -->
+<section class="products">
+  <div class="container">
+    <h2 class="section-title">Our Featured Candles</h2>
+    <div class="products-grid">
+      
+      <!-- Product 1 -->
+      <div class="product-card fade-up">
+        <img src="images/lav.jpeg" alt="Lavender Bliss Candle">
+        <h3>Lavender Bliss</h3>
+        <p class="price">$29.99</p>
+        <a href="#" class="btn">Buy Now</a>
+      </div>
+
+      <!-- Product 2 -->
+      <div class="product-card fade-up delay-1">
+        <img src="images/rose.jpg" alt="Rose Elegance Candle">
+        <h3>Rose Elegance</h3>
+        <p class="price">$34.99</p>
+        <a href="#" class="btn">Buy Now</a>
+      </div>
+
+      <!-- Product 3 -->
+      <div class="product-card fade-up delay-2">
+        <img src="images/citrus.jpg" alt="Citrus Harmony Candle">
+        <h3>Citrus Harmony</h3>
+        <p class="price">$24.99</p>
+        <a href="#" class="btn">Buy Now</a>
+      </div>
+
+      <!-- Product 4 -->
+      <div class="product-card fade-up delay-3">
+        <img src="images/Vanilla.jpeg" alt="Vanilla Glow Candle">
+        <h3>Vanilla Glow</h3>
+        <p class="price">$27.99</p>
+        <a href="#" class="btn">Buy Now</a>
+      </div>
+
+      <!-- Product 5 -->
+      <div class="product-card fade-up delay-3">
+        <img src="images/mocha.jpeg" alt="Mocha Delight Candle">
+        <h3>Mocha Delight</h3>
+        <p class="price">$27.99</p>
+        <a href="#" class="btn">Buy Now</a>
+      </div>
+
+      <!-- Product 6 -->
+      <div class="product-card fade-up delay-3">
+        <img src="images/warm.jpeg" alt="Warm Embrace">
+        <h3>Warm Embrace</h3>
+        <p class="price">$27.99</p>
+        <a href="#" class="btn">Buy Now</a>
+      </div>
+
+    </div>
+
+    <!-- View More Button -->
+    <div class="view-more-wrap">
+      <a href="categories.html" class="btn-outline">View More Products</a>
+    </div>
+  </div>
+</section>
+
+<!-- === PROMO SECTION === -->
+<section class="promo-section" id="promo">
+  <div class="promo-bg"></div>
+
+  <div class="promo-container container">
+    <div class="promo-left">
+      <h2><i class="fa-solid fa-star"></i> Exclusive Autumn Sale</h2>
+      <h3>Luxury Candles • Handcrafted • Eco-Friendly</h3>
+      <p>
+        Celebrate this season with our handcrafted soy candles. 
+        Enjoy <strong>25% OFF</strong> and bring warmth, fragrance, and elegance into your home.
+      </p>
+
+      <!-- Countdown -->
+      <div class="countdown-timer">
+        <div><span id="days">03</span><p>Days</p></div>
+        <div><span id="hours">12</span><p>Hours</p></div>
+        <div><span id="minutes">45</span><p>Minutes</p></div>
+        <div><span id="seconds">20</span><p>Seconds</p></div>
+      </div>
+
+      <div class="promo-buttons">
+        <a href="categories.html" class="btn">Shop Now</a>
+        <a href="#" class="btn-outline">View Collection</a>
+      </div>
+    </div>
+
+    <div class="promo-right">
+      <div class="promo-image-card">
+        <img src="images/lav.jpeg" alt="Lavender Bliss Candle"/>
+        <div class="floating-badge">25% OFF</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+  <!-- Contact Section -->
+<!--   <section class="contact-section">
+    <div class="container contact-container"> -->
+      <!-- Contact Form -->
+<!--       <div class="contact-form fade-left float-anim">
+        <h2>Get in <span>Touch</span></h2>
+        <p>We’d love to hear from you! Whether it’s a question, feedback, or just to say hello, fill out the form below.</p> -->
+<!--         <form aria-label="Contact Form">
+          <div class="form-group">
+            <input type="text" placeholder="Your Name" required aria-label="Your Name"/>
+          </div>
+          <div class="form-group">
+            <input type="email" placeholder="Your Email" required aria-label="Your Email"/>
+          </div>
+          <div class="form-group">
+            <textarea placeholder="Your Message" rows="5" required aria-label="Your Message"></textarea>
+          </div>
+          <button type="submit" class="btn">Send Message</button>
+        </form> -->
+     <!--  </div> -->
+
+      <!-- Contact Info -->
+<!--       <div class="contact-info glass-card fade-right glow-anim">
+        <h3>Contact Information</h3>
+        <div class="info-item animate-pulse">
+          <span class="icon" aria-hidden="true">📍</span>
+          <p>123 Candlelight Avenue, Serenity City</p>
+        </div>
+        <div class="info-item animate-pulse delay-1">
+          <span class="icon" aria-hidden="true">📞</span>
+          <p>+1 (555) 123-4567</p>
+        </div>
+        <div class="info-item animate-pulse delay-2">
+          <span class="icon" aria-hidden="true">📧</span>
+          <p>support@lumina.com</p>
+        </div>
+      </div> -->
+    <!-- </div> -->
+ <!--  </section> -->
+
+
+  <!-- Stats Section -->
+  <section class="stats">
+    <div class="container stats-grid">
+      <div class="stat-box"><h2>10K+</h2><p>Candles Sold</p></div>
+      <div class="stat-box"><h2>5K+</h2><p>Happy Customers</p></div>
+      <div class="stat-box"><h2>50+</h2><p>Stores Worldwide</p></div>
+      <div class="stat-box"><h2>15</h2><p>Awards Won</p></div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+<footer>
+  <div class="footer-container" id="contact-details">
+
+    <!-- Company Info -->
+    <div class="footer-col">
+      <h4>About Us</h4>
+      <p>Your trusted store for premium products, secure checkout, and fast delivery.</p>
+      <div class="footer-social">
+        <a href="#"><i class="fa-brands fa-facebook-f"></i></a>
+		<a href="#"><i class="fa-brands fa-x-twitter"></i></a>
+		<a href="#"><i class="fa-brands fa-instagram"></i></a>
+		<a href="#"><i class="fa-brands fa-linkedin-in"></i></a>
+      </div>
+    </div>
+
+    <!-- Quick Links -->
+    <div class="footer-col">
+      <h4>Quick Links</h4>
+      <ul>
+        <li><a href="index.html">Home</a></li>
+        <li><a href="categories.html#category-section">Shop</a></li>
+        <li><a href="categories.html#category-section">Cart</a></li>
+        <li><a href="categories.html#contact-section">Checkout</a></li>
+      </ul>
+    </div>
+
+    <!-- Support -->
+    <div class="footer-col">
+      <h4>Support</h4>
+      <ul>
+        <li><a href="#">Help Center</a></li>
+        <li><a href="#">Shipping & Returns</a></li>
+        <li><a href="#">Privacy Policy</a></li>
+        <li><a href="#">Terms & Conditions</a></li>
+      </ul>
+    </div>
+
+    <!-- Contact -->
+    <div class="footer-col">
+        <h3>Contact Information</h3>
+        <div class="info-item animate-pulse">
+          <span class="icon" aria-hidden="true">📍</span>
+          <p>71-75, Shelton Street, Covent Garden, London, United Kingdom</p>
+        </div>
+        <div class="info-item animate-pulse delay-1">
+          <span class="icon" aria-hidden="true">📞</span>
+          <p>+44 774 1059 907</p>
+	   </div>
+        <div class="info-item animate-pulse delay-2">
+          <span class="icon" aria-hidden="true">📧</span>
+          <p>info@neluxcandles.com</p>
+        </div>
+    </div>
+
+  </div>
+
+  <div class="sub-footer">
+    <p>© 2025 Bentjun Hub LLC. All Rights Reserved.</p>
+  </div>
+</footer>
+</body>
+</html>

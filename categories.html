@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>LUMINA Candles - Luxury Aromatherapy</title>
+  <link rel="stylesheet" href="styles-categories.css"/>
+  <link 
+    rel="stylesheet" 
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" 
+    crossorigin="anonymous" 
+    referrerpolicy="no-referrer"
+  />
+  <script defer src="script2.js"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;700&family=Poppins:wght@400;500&display=swap" rel="stylesheet"/>
+</head>
+
+<body>
+  <!-- Header -->
+  <header class="header">
+    <div class="container nav-container">
+      <div class="logo">
+        <a href="index.html">
+          <img src="images/LOGON.jpg" alt="Company Logo">
+        </a>
+      </div>
+      <nav class="navbar" aria-label="Main Navigation">
+        <ul>
+          <li><a href="index.html">Home</a></li>
+          <li><a href="categories.html#category-section">Shop</a></li>
+          <li><a href="categories.html#category-section">Collections</a></li>
+          <li><a href="index.html#promo">About</a></li>
+          <li><a href="#contact-details">Contact</a></li>
+        </ul>
+      </nav>
+      <a href="#contact-section" class="btn" id="checkoutBtn">Checkout</a>
+      <button class="menu-toggle" aria-label="Toggle Menu">&#9776;</button>
+    </div>
+  </header>
+
+  <!-- Hero Section -->
+  <section class="hero">
+    <video autoplay muted loop playsinline class="hero-video">
+      <source src="https://cdn.shopify.com/videos/c/o/v/97ca524a41754c60b057950b39d93c73.mp4" type="video/mp4"/>
+      Your browser does not support the video tag.
+    </video>
+    <div class="hero-overlay"></div>
+    <div class="hero-content">
+      <h2>Luminous Candles Ltd T/A Nelux Candles</h2>
+      <h1>
+        <span class="text-animate">Handcrafted <span>Candles</span> for Your Soul</span>
+        <span class="text-animate">Eco-Friendly <span>Luxury</span> in Every Jar</span>
+        <span class="text-animate">Fragrances that <span>Relax</span> &amp; Rejuvenate</span>
+      </h1>
+      <p>
+        Indulge your senses with our handcrafted luxury aromatherapy candles. Each candle is meticulously 
+        crafted using premium natural ingredients and essential oils, creating a soothing ambiance that promotes relaxation and rejuvenation.
+      </p>
+      <div class="hero-buttons">
+        <a href="categories.html#category-section" class="btn">Explore Collection</a>
+        <a href="index.html#promo" class="btn-outline">Learn More</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Product Section -->
+  <section class="product-section" id="category-section">
+    <div class="filter-bar">
+      <select id="category">
+        <option value="all">All Categories</option>
+        <option value="floral">Floral</option>
+        <option value="woody">Woody</option>
+        <option value="fresh">Fresh</option>
+        <option value="sweet">Sweet</option>
+        <option value="fruity">Fruity</option>
+        <option value="vanilla">Vanilla</option>
+        <option value="citrus">Citrus</option>
+        <option value="spicy">Spicy</option>
+      </select>
+      <select id="price">
+        <option value="all">All Prices</option>
+        <option value="low">Below $20</option>
+        <option value="mid">$20 - $30</option>
+        <option value="high">Above $30</option>
+      </select>
+      <select id="sort">
+        <option value="default">Sort</option>
+        <option value="low-high">Price: Low to High</option>
+        <option value="high-low">Price: High to Low</option>
+        <option value="az">A–Z</option>
+        <option value="za">Z–A</option>
+      </select>
+      <button id="applyFilters">Apply</button>
+    </div>
+
+    <div class="product-container">
+      <button class="slider-btn prev">‹</button>
+      <div class="productGrid">
+        <div class="slider-track"></div>
+      </div>
+      <button class="slider-btn next">›</button>
+    </div>
+  </section>
+
+  <!-- Checkout / Contact Section -->
+  <section class="contact-section" id="contact-section">
+    <div class="container contact-container">
+      <div class="contact-form fade-left float-anim">
+        <h2>Checkout & <span>Shipping Details</span></h2>
+        <form id="checkoutForm" method="post" novalidate>
+          <input type="text" id="fullName" name="fullName" placeholder="Your Name" required>
+          <input type="email" id="email" name="email" placeholder="Your Email" required>
+          <input type="tel" id="phone" name="phone" placeholder="Your Phone Number" required>
+          <input type="text" id="address" name="address" placeholder="Your House Address" required>
+          <input type="text" id="city" name="city" placeholder="City" required>
+          <select id="state" name="state" required>
+            <option value="">Select State</option>
+            <option value="Alabama">Alabama</option>
+            <option value="California">California</option>
+            <option value="District of Columbia">District of Columbia</option>
+            <option value="Idaho">Idaho</option>
+            <option value="Kansas">Kansas</option>
+            <option value="Maryland">Maryland</option>
+            <option value="Mississippi">Mississippi</option>
+            <option value="Nevada">Nevada</option>
+            <option value="Oklahoma">Oklahoma</option>
+            <option value="Rhode Island">Rhode Island</option>
+			<option value="Berlin">Berlin</option>
+          </select>
+          <input type="text" id="zip" name="zip" placeholder="Postal Code" required>
+          <select id="country" name="country" required>
+            <option value="">Select Country</option>
+            <option value="US">United States</option>
+            <option value="CA">Canada</option>
+            <option value="GB">United Kingdom</option>
+            <option value="DE">Germany</option>
+          </select>
+          <button type="submit" class="submit-btn">Proceed to Payment</button>
+        </form>
+      </div>
+
+      <div class="contact-info glass-card fade-right glow-anim">
+        <table class="cart-table">
+          <thead>
+            <tr>
+              <th>Product</th>
+              <th>Price</th>
+              <th>Quantity</th>
+              <th>Subtotal</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody id="cartItems">
+            <tr><td colspan="5" class="empty-cart">Your cart is empty</td></tr>
+          </tbody>
+        </table>
+        <div class="cart-total">
+          <h3>Total: $<span id="cartTotal">0.00</span></h3>
+        </div>
+      </div>
+    </div>
+  </section>
+  <!-- Footer -->
+<footer>
+  <div class="footer-container">
+
+    <!-- Company Info -->
+    <div class="footer-col">
+      <h4>About Us</h4>
+      <p>Your trusted store for premium products, secure checkout, and fast delivery.</p>
+      <div class="footer-social">
+        <a href="#"><i class="fab fa-facebook-f"></i></a>
+        <a href="#"><i class="fab fa-twitter"></i></a>
+        <a href="#"><i class="fab fa-instagram"></i></a>
+        <a href="#"><i class="fab fa-linkedin-in"></i></a>
+      </div>
+    </div>
+
+    <!-- Quick Links -->
+    <div class="footer-col">
+      <h4>Quick Links</h4>
+      <ul>
+        <li><a href="index.html">Home</a></li>
+        <li><a href="categories.html#category-section">Shop</a></li>
+        <li><a href="categories.html#category-section">Cart</a></li>
+        <li><a href="categories.html#contact-section">Checkout</a></li>
+      </ul>
+    </div>
+
+    <!-- Support -->
+    <div class="footer-col">
+      <h4>Support</h4>
+      <ul>
+        <li><a href="#">Help Center</a></li>
+        <li><a href="#">Shipping & Returns</a></li>
+        <li><a href="#">Privacy Policy</a></li>
+        <li><a href="#">Terms & Conditions</a></li>
+      </ul>
+    </div>
+
+    <!-- Contact -->
+    <div class="footer-col">
+        <h3>Contact Information</h3>
+        <div class="info-item animate-pulse">
+          <span class="icon" aria-hidden="true">📍</span>
+          <p>45 Salmon Turnpike #1062 Norwich CT. 06360</p>
+        </div>
+        <div class="info-item animate-pulse delay-1">
+          <span class="icon" aria-hidden="true">📞</span>
+          <p>+1 (860) 710-6651</p>
+	   </div>
+        <div class="info-item animate-pulse delay-2">
+          <span class="icon" aria-hidden="true">📧</span>
+          <p>Luminouscandlesmail@gmail.com</p>
+        </div>
+    </div>
+
+  </div>
+
+  <div class="sub-footer">
+    <p>© 2025 BentJun Hub LLC. All Rights Reserved.</p>
+  </div>
+</footer>
+</body>
+</html>
