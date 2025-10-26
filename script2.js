@@ -1,4 +1,4 @@
-// ------------------ Helpers ------------------
+// ------------------ Helpers ------------------ 
 const $ = (sel, parent = document) => parent.querySelector(sel);
 const $$ = (sel, parent = document) => parent.querySelectorAll(sel);
 
@@ -31,16 +31,21 @@ let state = {
 
 // ------------------ Product Data ------------------
 const products = [
-  { name: "Lavender Bliss", price: 1, img: "images/lav.jpeg", category: "floral" },
-  { name: "Aromatic Profiles", price: 1, img: "images/warm.jpeg", category: "woody" },
-  { name: "Citrus Harmony", price: 1, img: "images/citrus.jpg", category: "citrus" },
-  { name: "Vanilla Glow", price: 1, img: "images/Vanilla.jpeg", category: "vanilla" },
-  { name: "Mocha Delight", price: 1, img: "images/mocha.jpeg", category: "sweet" },
-  { name: "Orchid Oasis", price: 1, img: "images/orchid.jpeg", category: "floral" },
-  { name: "Secret Garden", price: 1, img: "images/secret.jpg", category: "floral" },
-  { name: "Currant Blossom", price: 1, img: "images/currant1.jpg", category: "fruity" },
-  { name: "Patchouli Amber", price: 1, img: "images/Patchouli.jpg", category: "woody" },
-  { name: "Arctic Ice", price: 1, img: "images/arctic.png", category: "fresh" },
+  { name: "Aqua Surge", price: 25, img: "images/Aqua_Surge.png", category: "floral" },
+  { name: "Autumn Indulgence", price: 25, img: "images/Autumn_Indulgence.png", category: "woody" },
+  { name: "Bergamot Bloom", price: 25, img: "images/Bergamot_Bloom.png", category: "citrus" },
+  { name: "Cashmere Dreams", price: 25, img: "images/Cashmere_Dreams.png", category: "vanilla" },
+  { name: "Christmas Kiss", price: 25, img: "images/Christmas_Kiss.png", category: "sweet" },
+  { name: "Golden Nector", price: 25, img: "images/Golden_Nector.png", category: "floral" },
+  { name: "Hamptons Breeze", price: 25, img: "images/Hamptons_Breeze.png", category: "floral" },
+  { name: "Holy Berry", price: 25, img: "images/Holy_Berry.png", category: "fruity" },
+  { name: "Lemon & Lavender", price: 25, img: "images/Lemon_Lavender.png", category: "woody" },
+  { name: "Lemongrass Elixir", price: 25, img: "images/Lemongrass_Elixir.png", category: "fresh" },
+  { name: "Take Me Away", price: 25, img: "images/Take_Me_Away.png", category: "fresh" },
+  { name: "Mocha Delight", price: 25, img: "images/Mocha_Delight.png", category: "floral" },
+  { name: "Mojito Millionaire", price: 25, img: "images/Mojito_Millionaire.png", category: "floral" },
+  { name: "Mystic Woods", price: 25, img: "images/Mystic_Woods.png", category: "fruity" },
+  { name: "Strawberry Vanilla", price: 25, img: "images/Strawberry_Vanilla.png", category: "woody" }
 ];
 
 // ------------------ Money ------------------
@@ -182,9 +187,8 @@ function renderCart() {
   });
 
   const shipping = subtotal > 50 ? 0 : 5.99;
-  const tax = subtotal * 0.07;
-  const total = +(subtotal + tax + shipping).toFixed(2);
-  cartTotal.textContent = total.toFixed(2);
+  const total = (subtotal + shipping).toFixed(2); // ✅ Tax completely removed
+  cartTotal.textContent = total;
 }
 
 // ------------------ Event Delegation ------------------
@@ -227,10 +231,9 @@ function initCheckoutForm() {
 
     const subtotal = items.reduce((sum, i) => sum + i.price * i.qty, 0);
     const shipping = subtotal > 50 ? 0 : 5.99;
-    const tax = subtotal * 0.07;
-    const total = +(subtotal + tax + shipping).toFixed(2);
+    const total = (subtotal + shipping).toFixed(2); // ✅ No tax
 
-    const orderData = { customer: customerInfo, cart: items, total };
+    const orderData = { customer: customerInfo, cart: items, total: parseFloat(total) };
     console.log("Submitting checkout request:", orderData);
 
     try {
@@ -242,11 +245,7 @@ function initCheckoutForm() {
         mode: "cors"
       });
 
-      console.log("Response status:", res.status);
-
       const data = await res.json().catch(() => ({}));
-      console.log("Response data:", data);
-
       if (!res.ok) throw new Error(data.detail || "Checkout error");
 
       if (data.url) {
@@ -261,10 +260,52 @@ function initCheckoutForm() {
   });
 }
 
+// ------------------ Promo Timer ------------------
+function initPromoTimer() {
+  const promoContainer = document.querySelector(".promo-timer");
+  if (!promoContainer) return;
+
+  const promoEnd = new Date("2025-10-30T23:59:59"); // static promo end date
+
+  promoContainer.innerHTML = `
+    <div class="time-box"><span id="days">00</span><small>Days</small></div>
+    <div class="time-box"><span id="hours">00</span><small>Hours</small></div>
+    <div class="time-box"><span id="minutes">00</span><small>Minutes</small></div>
+    <div class="time-box"><span id="seconds">00</span><small>Seconds</small></div>
+  `;
+
+  const daysEl = $("#days", promoContainer);
+  const hoursEl = $("#hours", promoContainer);
+  const minutesEl = $("#minutes", promoContainer);
+  const secondsEl = $("#seconds", promoContainer);
+
+  function updatePromoTimer() {
+    const now = new Date();
+    const diff = promoEnd - now;
+
+    if (diff <= 0) {
+      promoContainer.innerHTML = `<p class="ended-text">🎉 Promo has ended!</p>`;
+      clearInterval(timer);
+      return;
+    }
+
+    const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+    const hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
+    const mins = Math.floor((diff / (1000 * 60)) % 60);
+    const secs = Math.floor((diff / 1000) % 60);
+
+    daysEl.textContent = days.toString().padStart(2, "0");
+    hoursEl.textContent = hours.toString().padStart(2, "0");
+    minutesEl.textContent = mins.toString().padStart(2, "0");
+    secondsEl.textContent = secs.toString().padStart(2, "0");
+  }
+
+  updatePromoTimer();
+  const timer = setInterval(updatePromoTimer, 1000);
+}
 
 // ------------------ Boot ------------------
 document.addEventListener("DOMContentLoaded", () => {
-  // Clear cart on page load/refresh
   state.cart = {};
   localStorage.setItem("lumina_cart", JSON.stringify(state.cart));
 
@@ -275,6 +316,7 @@ document.addEventListener("DOMContentLoaded", () => {
   staggerAppear(".hero h1, .hero p", 0.2);
   staggerAppear(".contact-form, .contact-info", 0.25);
   animateOnScroll();
+  initPromoTimer(); // ✅ static promo timer
 });
 
 window.addEventListener("scroll", animateOnScroll);

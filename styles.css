@@ -853,3 +853,179 @@ footer {
   }
 }
 
+/* === ABOUT SECTION ENHANCEMENTS === */
+.parallax-bg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 120%;
+  background: url('images/about-bg.jpg') center/cover fixed;
+  opacity: 0.1;
+  z-index: 0;
+}
+
+.about-section {
+  position: relative;
+  z-index: 1;
+  overflow: hidden;
+}
+
+.about-section .floating-light {
+  position: absolute;
+  top: 40%;
+  left: 50%;
+  width: 200px;
+  height: 200px;
+  background: radial-gradient(circle, rgba(255,255,200,0.4) 0%, transparent 70%);
+  transform: translate(-50%, -50%);
+  animation: floatLight 6s infinite ease-in-out alternate;
+}
+
+@keyframes floatLight {
+  0% { transform: translate(-50%, -60%) scale(1); opacity: 0.8; }
+  100% { transform: translate(-50%, -40%) scale(1.2); opacity: 0.4; }
+}
+
+.glow-btn {
+  box-shadow: 0 0 12px rgba(212, 160, 23, 0.6);
+  transition: all 0.3s ease;
+}
+.glow-btn:hover {
+  background: #d4a017;
+  color: #fff;
+  box-shadow: 0 0 20px rgba(212, 160, 23, 0.8);
+}
+
+/* === SCENT SHOWCASE === */
+.scent-showcase {
+  margin-top: 5rem;
+  text-align: center;
+}
+.scent-carousel {
+  display: flex;
+  gap: 1.5rem;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  padding: 1rem 0;
+}
+.scent-card {
+  background: #fff;
+  border-radius: 14px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+  flex: 0 0 220px;
+  scroll-snap-align: center;
+  transition: transform 0.4s ease;
+}
+.scent-card:hover {
+  transform: translateY(-8px);
+}
+.scent-card img {
+  width: 100%;
+  border-radius: 14px 14px 0 0;
+}
+.scent-card p {
+  padding: 0.8rem;
+  font-size: 0.95rem;
+  color: #444;
+}
+
+/* === SCROLL REVEAL ANIMATIONS === */
+.fade-left, .fade-right, .fade-up, .reveal {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.8s ease, transform 0.8s ease;
+}
+.show {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* === ABOUT SECTION ENHANCEMENTS === */
+.parallax-bg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 120%;
+  background: url('images/about-bg.jpg') center/cover fixed;
+  opacity: 0.1;
+  z-index: 0;
+}
+
+.about-section {
+  position: relative;
+  z-index: 1;
+  overflow: hidden;
+}
+
+.about-section .floating-light {
+  position: absolute;
+  top: 40%;
+  left: 50%;
+  width: 200px;
+  height: 200px;
+  background: radial-gradient(circle, rgba(255,255,200,0.4) 0%, transparent 70%);
+  transform: translate(-50%, -50%);
+  animation: floatLight 6s infinite ease-in-out alternate;
+}
+
+@keyframes floatLight {
+  0% { transform: translate(-50%, -60%) scale(1); opacity: 0.8; }
+  100% { transform: translate(-50%, -40%) scale(1.2); opacity: 0.4; }
+}
+
+.glow-btn {
+  box-shadow: 0 0 12px rgba(212, 160, 23, 0.6);
+  transition: all 0.3s ease;
+}
+.glow-btn:hover {
+  background: #d4a017;
+  color: #fff;
+  box-shadow: 0 0 20px rgba(212, 160, 23, 0.8);
+}
+
+/* === SCENT SHOWCASE === */
+.scent-showcase {
+  margin-top: 5rem;
+  text-align: center;
+}
+.scent-carousel {
+  display: flex;
+  gap: 1.5rem;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  padding: 1rem 0;
+}
+.scent-card {
+  background: #fff;
+  border-radius: 14px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+  flex: 0 0 220px;
+  scroll-snap-align: center;
+  transition: transform 0.4s ease;
+}
+.scent-card:hover {
+  transform: translateY(-8px);
+}
+.scent-card img {
+  width: 100%;
+  border-radius: 14px 14px 0 0;
+}
+.scent-card p {
+  padding: 0.8rem;
+  font-size: 0.95rem;
+  color: #444;
+}
+
+/* === SCROLL REVEAL ANIMATIONS === */
+.fade-left, .fade-right, .fade-up, .reveal {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.8s ease, transform 0.8s ease;
+}
+.show {
+  opacity: 1;
+  transform: translateY(0);
+}
+
