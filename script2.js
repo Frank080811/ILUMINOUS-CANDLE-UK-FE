@@ -1,17 +1,15 @@
-// ------------------ Helpers ------------------
 const $ = (sel, parent = document) => parent.querySelector(sel);
 const $$ = (sel, parent = document) => parent.querySelectorAll(sel);
 
+// Header scroll effect
 window.addEventListener("scroll", () => {
   const header = $("header");
-  if (window.scrollY > 40) header.classList.add("scrolled");
-  else header.classList.remove("scrolled");
+  header?.classList.toggle("scrolled", window.scrollY > 40);
 });
 
+// Staggered animations
 function staggerAppear(selector, delay = 0.15) {
-  $$(selector).forEach((el, i) => {
-    setTimeout(() => el.classList.add("appear"), i * delay * 1000);
-  });
+  $$(selector).forEach((el, i) => setTimeout(() => el.classList.add("appear"), i * delay * 1000));
 }
 
 function animateOnScroll() {
@@ -22,14 +20,13 @@ function animateOnScroll() {
   });
 }
 
-// ------------------ State ------------------
+// State
 let state = {
-  cart: JSON.parse(localStorage.getItem("lumina_cart") || "{}"),
+  cart: {},
   orders: JSON.parse(localStorage.getItem("lumina_orders") || "[]"),
   coupon: null
 };
 
-// ------------------ Product Data ------------------
 const products = [
   { name: "Aqua Surge", price: 25, img: "images/Aqua_Surge.png", category: "floral" },
   { name: "Autumn Indulgence", price: 25, img: "images/Autumn_Indulgence.png", category: "woody" },
@@ -48,15 +45,15 @@ const products = [
   { name: "Strawberry Vanilla", price: 25, img: "images/Strawberry_Vanilla.png", category: "woody" }
 ];
 
-// ------------------ Money ------------------
-function money(v) {
-  return `£${v.toFixed(2)}`;
-}
+function money(v) { return `£${v.toFixed(2)}`; }
 
-// ------------------ Render Products ------------------
 const productGrid = $(".productGrid");
+
+// Render products
 function renderProductsDynamic(list = products) {
   if (!productGrid) return;
+
+  // Clear previous products
   productGrid.innerHTML = "";
 
   list.forEach((p, i) => {
@@ -77,7 +74,7 @@ function renderProductsDynamic(list = products) {
   productGrid.style.gap = "20px";
 }
 
-// ------------------ Filter/Search ------------------
+// Filters
 const categoryFilter = $("#category");
 const priceFilter = $("#price");
 const sortFilter = $("#sort");
@@ -104,12 +101,10 @@ function filterProducts() {
   renderProductsDynamic(filtered);
 }
 
-if (applyFiltersBtn) applyFiltersBtn.addEventListener("click", filterProducts);
+applyFiltersBtn?.addEventListener("click", filterProducts);
 
-// ------------------ Cart Logic ------------------
-function saveCart() {
-  localStorage.setItem("lumina_cart", JSON.stringify(state.cart));
-}
+// Cart logic
+function saveCart() { localStorage.setItem("lumina_cart", JSON.stringify(state.cart)); }
 
 function toast(msg) {
   const el = document.createElement("div");
@@ -127,11 +122,7 @@ function toast(msg) {
     color: "#fff",
   });
   document.body.appendChild(el);
-  setTimeout(() => {
-    el.style.opacity = "0";
-    el.style.transition = "opacity .4s";
-    setTimeout(() => el.remove(), 400);
-  }, 1300);
+  setTimeout(() => { el.style.opacity = "0"; el.style.transition = "opacity .4s"; setTimeout(() => el.remove(), 400); }, 1300);
 }
 
 function addToCart(name, price) {
@@ -142,19 +133,11 @@ function addToCart(name, price) {
   toast(`${name} added to cart`);
 }
 
-function removeFromCart(name) {
-  delete state.cart[name];
-  saveCart();
-  renderCart();
-}
+function removeFromCart(name) { delete state.cart[name]; saveCart(); renderCart(); }
 
 function updateQty(name, qty) {
   if (qty <= 0) removeFromCart(name);
-  else {
-    state.cart[name].qty = qty;
-    saveCart();
-    renderCart();
-  }
+  else { state.cart[name].qty = qty; saveCart(); renderCart(); }
 }
 
 function renderCart() {
@@ -164,7 +147,6 @@ function renderCart() {
 
   const items = Object.values(state.cart);
   cartBody.innerHTML = "";
-
   if (!items.length) {
     cartBody.innerHTML = '<tr><td colspan="5" class="empty-cart">Your cart is empty</td></tr>';
     cartTotal.textContent = "0.00";
@@ -187,16 +169,14 @@ function renderCart() {
   });
 
   const shipping = subtotal > 50 ? 0 : 5.99;
-  const total = (subtotal + shipping).toFixed(2); // ✅ Tax removed
+  const total = (subtotal + shipping).toFixed(2);
   cartTotal.textContent = total;
 }
 
-// ------------------ Event Delegation ------------------
 function initCartDelegation() {
   document.body.addEventListener("click", e => {
     const btn = e.target.closest(".add-to-cart");
     if (btn) addToCart(btn.dataset.name, parseFloat(btn.dataset.price));
-
     if (e.target.classList.contains("remove-btn")) removeFromCart(e.target.dataset.name);
   });
 
@@ -205,7 +185,7 @@ function initCartDelegation() {
   });
 }
 
-// ------------------ Checkout ------------------
+// Checkout
 const API_URL = "https://iluminous-candle-uk-be.onrender.com";
 
 function initCheckoutForm() {
@@ -231,40 +211,29 @@ function initCheckoutForm() {
 
     const subtotal = items.reduce((sum, i) => sum + i.price * i.qty, 0);
     const shipping = subtotal > 50 ? 0 : 5.99;
-    const total = (subtotal + shipping).toFixed(2); // ✅ Tax removed
+    const total = (subtotal + shipping).toFixed(2);
 
     const orderData = { customer: customerInfo, cart: items, total: parseFloat(total) };
-    console.log("Submitting checkout request:", orderData);
-
+    toast("Creating checkout session...");
     try {
-      toast("Creating checkout session...");
       const res = await fetch(`${API_URL}/create-checkout-session`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(orderData),
         mode: "cors"
       });
-
       const data = await res.json().catch(() => ({}));
       if (!res.ok) throw new Error(data.detail || "Checkout error");
-
-      if (data.url) {
-        window.location.href = data.url;
-      } else {
-        toast("Checkout failed — no URL returned");
-      }
-    } catch (err) {
-      console.error("Checkout error:", err);
-      toast("Checkout failed: " + err.message);
-    }
+      if (data.url) window.location.href = data.url;
+      else toast("Checkout failed — no URL returned");
+    } catch (err) { toast("Checkout failed: " + err.message); }
   });
 }
 
-// ------------------ Promo Timer ------------------
+// Promo timer
 function initPromoTimer() {
   const promoContainer = document.querySelector(".promo-timer");
   if (!promoContainer) return;
-
   const promoEnd = new Date("2025-10-30T23:59:59");
 
   promoContainer.innerHTML = `
@@ -280,32 +249,31 @@ function initPromoTimer() {
   const secondsEl = $("#seconds", promoContainer);
 
   function updatePromoTimer() {
-    const now = new Date();
-    const diff = promoEnd - now;
-
+    const diff = promoEnd - new Date();
     if (diff <= 0) {
       promoContainer.innerHTML = `<p class="ended-text">🎉 Promo has ended!</p>`;
       clearInterval(timer);
       return;
     }
 
-    const days = Math.floor(diff / (1000 * 60 * 60 * 24));
-    const hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
-    const mins = Math.floor((diff / (1000 * 60)) % 60);
+    const days = Math.floor(diff / (1000*60*60*24));
+    const hours = Math.floor((diff / (1000*60*60)) % 24);
+    const mins = Math.floor((diff / (1000*60)) % 60);
     const secs = Math.floor((diff / 1000) % 60);
 
-    daysEl.textContent = days.toString().padStart(2, "0");
-    hoursEl.textContent = hours.toString().padStart(2, "0");
-    minutesEl.textContent = mins.toString().padStart(2, "0");
-    secondsEl.textContent = secs.toString().padStart(2, "0");
+    daysEl.textContent = days.toString().padStart(2,"0");
+    hoursEl.textContent = hours.toString().padStart(2,"0");
+    minutesEl.textContent = mins.toString().padStart(2,"0");
+    secondsEl.textContent = secs.toString().padStart(2,"0");
   }
 
   updatePromoTimer();
   const timer = setInterval(updatePromoTimer, 1000);
 }
 
-// ------------------ Boot ------------------
+// Initialization
 document.addEventListener("DOMContentLoaded", () => {
+  state.cart = {}; // Clear cart on page load
   renderProductsDynamic();
   renderCart();
   initCartDelegation();
@@ -314,23 +282,14 @@ document.addEventListener("DOMContentLoaded", () => {
   staggerAppear(".contact-form, .contact-info", 0.25);
   animateOnScroll();
   initPromoTimer();
-});
 
-document.addEventListener("DOMContentLoaded", function () {
   const menuToggle = document.querySelector(".menu-toggle");
   const navMenu = document.querySelector(".navbar ul");
 
-  menuToggle.addEventListener("click", () => {
-    navMenu.classList.toggle("show");
-
-    // Smooth icon animation (optional)
-    if (menuToggle.innerHTML === "&#9776;") {
-      menuToggle.innerHTML = "&times;"; // change to 'X'
-    } else {
-      menuToggle.innerHTML = "&#9776;"; // revert to hamburger
-    }
+  menuToggle?.addEventListener("click", () => {
+    navMenu?.classList.toggle("show");
+    menuToggle.innerHTML = menuToggle.innerHTML === "&#9776;" ? "&times;" : "&#9776;";
   });
 });
-
 
 window.addEventListener("scroll", animateOnScroll);
