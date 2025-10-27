@@ -400,6 +400,45 @@ header.scrolled .navbar a:hover { color: var(--brand); }
 .fade-left, .fade-right, .fade-up, .reveal { opacity: 0; transform: translateY(20px); transition: opacity 0.8s ease, transform 0.8s ease; }
 .show { opacity: 1; transform: translateY(0); }
 
+
+/* ==================== LOGO ANIMATIONS ================= */
+.logo {
+  background: var(--brand);
+  padding: 8px;
+  border-radius: 8px;
+  display: inline-block;
+  font-size: 1.8rem;
+  font-weight: 700;
+  font-family: 'Playfair Display', serif;
+  color: #b27b48;
+  letter-spacing: .12em;
+  animation: rotateScale 5s linear infinite;
+  max-width: 200px; /* Limit logo container width */
+  text-align: center;
+}
+
+.logo img {
+  width: 80px; /* Set a fixed width */
+  height: auto; /* Keep aspect ratio */
+  display: block;
+  margin: 0 auto;
+  animation: pulse 2s ease-in-out infinite alternate;
+}
+
+@keyframes rotateScale {
+  0% { transform: rotate(0deg) scale(1); }
+  25% { transform: rotate(90deg) scale(1.05); }
+  50% { transform: rotate(180deg) scale(1); }
+  75% { transform: rotate(270deg) scale(1.05); }
+  100% { transform: rotate(360deg) scale(1); }
+}
+
+@keyframes pulse {
+  0%, 100% { transform: scale(1); opacity: 1; }
+  50% { transform: scale(1.1); opacity: 0.8; }
+}
+
+
 /* ==================== FOOTER ==================== */
 footer {
   background: #0d0d0d;
