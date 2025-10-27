@@ -1,4 +1,4 @@
-// ------------------ Helpers ------------------ 
+// ------------------ Helpers ------------------
 const $ = (sel, parent = document) => parent.querySelector(sel);
 const $$ = (sel, parent = document) => parent.querySelectorAll(sel);
 
@@ -38,7 +38,7 @@ const products = [
   { name: "Christmas Kiss", price: 25, img: "images/Christmas_Kiss.png", category: "sweet" },
   { name: "Golden Nector", price: 25, img: "images/Golden_Nector.png", category: "floral" },
   { name: "Hamptons Breeze", price: 25, img: "images/Hamptons_Breeze.png", category: "floral" },
-  { name: "Holy Berry", price: 25, img: "images/Holy_Berry.png", category: "fruity" },
+  { name: "Holy Berry", price: 25, img: "images/berry.png.png", category: "fruity" },
   { name: "Lemon & Lavender", price: 25, img: "images/Lemon_Lavender.png", category: "woody" },
   { name: "Lemongrass Elixir", price: 25, img: "images/Lemongrass_Elixir.png", category: "fresh" },
   { name: "Take Me Away", price: 25, img: "images/Take_Me_Away.png", category: "fresh" },
@@ -50,7 +50,7 @@ const products = [
 
 // ------------------ Money ------------------
 function money(v) {
-  return `$${v.toFixed(2)}`;
+  return `£${v.toFixed(2)}`;
 }
 
 // ------------------ Render Products ------------------
@@ -187,7 +187,7 @@ function renderCart() {
   });
 
   const shipping = subtotal > 50 ? 0 : 5.99;
-  const total = (subtotal + shipping).toFixed(2); // ✅ Tax completely removed
+  const total = (subtotal + shipping).toFixed(2); // ✅ Tax removed
   cartTotal.textContent = total;
 }
 
@@ -231,7 +231,7 @@ function initCheckoutForm() {
 
     const subtotal = items.reduce((sum, i) => sum + i.price * i.qty, 0);
     const shipping = subtotal > 50 ? 0 : 5.99;
-    const total = (subtotal + shipping).toFixed(2); // ✅ No tax
+    const total = (subtotal + shipping).toFixed(2); // ✅ Tax removed
 
     const orderData = { customer: customerInfo, cart: items, total: parseFloat(total) };
     console.log("Submitting checkout request:", orderData);
@@ -265,7 +265,7 @@ function initPromoTimer() {
   const promoContainer = document.querySelector(".promo-timer");
   if (!promoContainer) return;
 
-  const promoEnd = new Date("2025-10-30T23:59:59"); // static promo end date
+  const promoEnd = new Date("2025-10-30T23:59:59");
 
   promoContainer.innerHTML = `
     <div class="time-box"><span id="days">00</span><small>Days</small></div>
@@ -306,9 +306,6 @@ function initPromoTimer() {
 
 // ------------------ Boot ------------------
 document.addEventListener("DOMContentLoaded", () => {
-  state.cart = {};
-  localStorage.setItem("lumina_cart", JSON.stringify(state.cart));
-
   renderProductsDynamic();
   renderCart();
   initCartDelegation();
@@ -316,7 +313,24 @@ document.addEventListener("DOMContentLoaded", () => {
   staggerAppear(".hero h1, .hero p", 0.2);
   staggerAppear(".contact-form, .contact-info", 0.25);
   animateOnScroll();
-  initPromoTimer(); // ✅ static promo timer
+  initPromoTimer();
 });
+
+document.addEventListener("DOMContentLoaded", function () {
+  const menuToggle = document.querySelector(".menu-toggle");
+  const navMenu = document.querySelector(".navbar ul");
+
+  menuToggle.addEventListener("click", () => {
+    navMenu.classList.toggle("show");
+
+    // Smooth icon animation (optional)
+    if (menuToggle.innerHTML === "&#9776;") {
+      menuToggle.innerHTML = "&times;"; // change to 'X'
+    } else {
+      menuToggle.innerHTML = "&#9776;"; // revert to hamburger
+    }
+  });
+});
+
 
 window.addEventListener("scroll", animateOnScroll);
