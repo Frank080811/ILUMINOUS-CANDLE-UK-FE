@@ -1,32 +1,36 @@
 const $ = (sel, parent = document) => parent.querySelector(sel);
 const $$ = (sel, parent = document) => parent.querySelectorAll(sel);
 
-// Header scroll effect
+// ================= HEADER SCROLL EFFECT =================
 window.addEventListener("scroll", () => {
   const header = $("header");
   header?.classList.toggle("scrolled", window.scrollY > 40);
 });
 
-// Staggered animations
+// ================= STAGGERED ANIMATIONS =================
 function staggerAppear(selector, delay = 0.15) {
-  $$(selector).forEach((el, i) => setTimeout(() => el.classList.add("appear"), i * delay * 1000));
+  $$(selector).forEach((el, i) =>
+    setTimeout(() => el.classList.add("appear"), i * delay * 1000)
+  );
 }
 
 function animateOnScroll() {
   const animEls = $$(".fade-up, .fade-left, .fade-right");
   const triggerBottom = window.innerHeight * 0.85;
-  animEls.forEach(el => {
-    if (el.getBoundingClientRect().top < triggerBottom) el.classList.add("appear");
+  animEls.forEach((el) => {
+    if (el.getBoundingClientRect().top < triggerBottom)
+      el.classList.add("appear");
   });
 }
 
-// State
+// ================= STATE =================
 let state = {
   cart: {},
   orders: JSON.parse(localStorage.getItem("lumina_orders") || "[]"),
-  coupon: null
+  coupon: null,
 };
 
+// ================= PRODUCTS =================
 const products = [
   { name: "Aqua Surge", price: 25, img: "images/Aqua_Surge.png", category: "floral" },
   { name: "Autumn Indulgence", price: 25, img: "images/Autumn_Indulgence.png", category: "woody" },
@@ -42,18 +46,19 @@ const products = [
   { name: "Mocha Delight", price: 25, img: "images/Mocha_Delight.png", category: "floral" },
   { name: "Mojito Millionaire", price: 25, img: "images/Mojito_Millionaire.png", category: "floral" },
   { name: "Mystic Woods", price: 25, img: "images/Mystic_Woods.png", category: "fruity" },
-  { name: "Strawberry Vanilla", price: 25, img: "images/Strawberry_Vanilla.png", category: "woody" }
+  { name: "Strawberry Vanilla", price: 25, img: "images/Strawberry_Vanilla.png", category: "woody" },
 ];
 
-function money(v) { return `£${v.toFixed(2)}`; }
+function money(v) {
+  return `£${v.toFixed(2)}`;
+}
 
 const productGrid = $(".productGrid");
 
-// Render products
+// ================= RENDER PRODUCTS =================
 function renderProductsDynamic(list = products) {
   if (!productGrid) return;
 
-  // Clear previous products
   productGrid.innerHTML = "";
 
   list.forEach((p, i) => {
@@ -74,7 +79,7 @@ function renderProductsDynamic(list = products) {
   productGrid.style.gap = "20px";
 }
 
-// Filters
+// ================= FILTERS =================
 const categoryFilter = $("#category");
 const priceFilter = $("#price");
 const sortFilter = $("#sort");
@@ -85,7 +90,7 @@ function filterProducts() {
   const price = priceFilter?.value || "all";
   const sort = sortFilter?.value || "default";
 
-  let filtered = products.filter(p => {
+  let filtered = products.filter((p) => {
     if (category !== "all" && p.category !== category) return false;
     if (price === "low" && p.price >= 20) return false;
     if (price === "mid" && (p.price < 20 || p.price > 30)) return false;
@@ -103,8 +108,10 @@ function filterProducts() {
 
 applyFiltersBtn?.addEventListener("click", filterProducts);
 
-// Cart logic
-function saveCart() { localStorage.setItem("lumina_cart", JSON.stringify(state.cart)); }
+// ================= CART LOGIC =================
+function saveCart() {
+  localStorage.setItem("lumina_cart", JSON.stringify(state.cart));
+}
 
 function toast(msg) {
   const el = document.createElement("div");
@@ -122,7 +129,11 @@ function toast(msg) {
     color: "#fff",
   });
   document.body.appendChild(el);
-  setTimeout(() => { el.style.opacity = "0"; el.style.transition = "opacity .4s"; setTimeout(() => el.remove(), 400); }, 1300);
+  setTimeout(() => {
+    el.style.opacity = "0";
+    el.style.transition = "opacity .4s";
+    setTimeout(() => el.remove(), 400);
+  }, 1300);
 }
 
 function addToCart(name, price) {
@@ -133,11 +144,19 @@ function addToCart(name, price) {
   toast(`${name} added to cart`);
 }
 
-function removeFromCart(name) { delete state.cart[name]; saveCart(); renderCart(); }
+function removeFromCart(name) {
+  delete state.cart[name];
+  saveCart();
+  renderCart();
+}
 
 function updateQty(name, qty) {
   if (qty <= 0) removeFromCart(name);
-  else { state.cart[name].qty = qty; saveCart(); renderCart(); }
+  else {
+    state.cart[name].qty = qty;
+    saveCart();
+    renderCart();
+  }
 }
 
 function renderCart() {
@@ -148,13 +167,14 @@ function renderCart() {
   const items = Object.values(state.cart);
   cartBody.innerHTML = "";
   if (!items.length) {
-    cartBody.innerHTML = '<tr><td colspan="5" class="empty-cart">Your cart is empty</td></tr>';
+    cartBody.innerHTML =
+      '<tr><td colspan="5" class="empty-cart">Your cart is empty</td></tr>';
     cartTotal.textContent = "0.00";
     return;
   }
 
   let subtotal = 0;
-  items.forEach(i => {
+  items.forEach((i) => {
     const row = document.createElement("tr");
     const itemSubtotal = i.price * i.qty;
     subtotal += itemSubtotal;
@@ -174,18 +194,20 @@ function renderCart() {
 }
 
 function initCartDelegation() {
-  document.body.addEventListener("click", e => {
+  document.body.addEventListener("click", (e) => {
     const btn = e.target.closest(".add-to-cart");
     if (btn) addToCart(btn.dataset.name, parseFloat(btn.dataset.price));
-    if (e.target.classList.contains("remove-btn")) removeFromCart(e.target.dataset.name);
+    if (e.target.classList.contains("remove-btn"))
+      removeFromCart(e.target.dataset.name);
   });
 
-  document.body.addEventListener("input", e => {
-    if (e.target.classList.contains("qty-input")) updateQty(e.target.dataset.name, parseInt(e.target.value));
+  document.body.addEventListener("input", (e) => {
+    if (e.target.classList.contains("qty-input"))
+      updateQty(e.target.dataset.name, parseInt(e.target.value));
   });
 }
 
-// Checkout
+// ================= CHECKOUT =================
 const API_URL = "https://iluminous-candle-uk-be.onrender.com";
 
 function initCheckoutForm() {
@@ -213,24 +235,73 @@ function initCheckoutForm() {
     const shipping = subtotal > 50 ? 0 : 5.99;
     const total = (subtotal + shipping).toFixed(2);
 
-    const orderData = { customer: customerInfo, cart: items, total: parseFloat(total) };
+    const orderData = {
+      customer: customerInfo,
+      cart: items,
+      total: parseFloat(total),
+    };
     toast("Creating checkout session...");
     try {
       const res = await fetch(`${API_URL}/create-checkout-session`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(orderData),
-        mode: "cors"
+        mode: "cors",
       });
       const data = await res.json().catch(() => ({}));
       if (!res.ok) throw new Error(data.detail || "Checkout error");
       if (data.url) window.location.href = data.url;
       else toast("Checkout failed — no URL returned");
-    } catch (err) { toast("Checkout failed: " + err.message); }
+    } catch (err) {
+      toast("Checkout failed: " + err.message);
+    }
   });
 }
 
-// Promo timer
+// ================= HERO ANIMATIONS =================
+let heroAngle = 0;
+function heroContinuousMotion() {
+  const hero = document.querySelector(".hero");
+  if (!hero) return;
+  const video = hero.querySelector(".hero-video");
+  const overlay = hero.querySelector(".hero-overlay");
+  heroAngle += 0.05;
+
+  // Subtle video sway
+  if (video) {
+    video.style.transform = `scale(1.05) translateY(${Math.sin(heroAngle) * 10}px)`;
+  }
+
+  // Breathing overlay effect
+  if (overlay) {
+    overlay.style.backgroundColor = `rgba(0, 0, 0, ${0.3 + 0.1 * Math.sin(heroAngle / 2)})`;
+  }
+
+  requestAnimationFrame(heroContinuousMotion);
+}
+
+function heroParallax() {
+  const hero = document.querySelector(".hero");
+  if (!hero) return;
+
+  const video = hero.querySelector(".hero-video");
+  const content = hero.querySelector(".hero-content");
+  const scrollTop = window.scrollY;
+  const speed = 0.3;
+
+  if (video) video.style.transform = `translateY(${scrollTop * speed * 0.5}px) scale(1.05)`;
+  if (content) content.style.transform = `translateY(${scrollTop * -speed * 0.5}px)`;
+}
+
+function initHeroFloating() {
+  const heroTexts = document.querySelectorAll(".hero h1 span");
+  heroTexts.forEach((el, i) => {
+    el.style.animation = `floatY 6s ease-in-out ${i * 1}s infinite`;
+  });
+  requestAnimationFrame(heroContinuousMotion);
+}
+
+// ================= PROMO TIMER =================
 function initPromoTimer() {
   const promoContainer = document.querySelector(".promo-timer");
   if (!promoContainer) return;
@@ -256,24 +327,24 @@ function initPromoTimer() {
       return;
     }
 
-    const days = Math.floor(diff / (1000*60*60*24));
-    const hours = Math.floor((diff / (1000*60*60)) % 24);
-    const mins = Math.floor((diff / (1000*60)) % 60);
+    const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+    const hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
+    const mins = Math.floor((diff / (1000 * 60)) % 60);
     const secs = Math.floor((diff / 1000) % 60);
 
-    daysEl.textContent = days.toString().padStart(2,"0");
-    hoursEl.textContent = hours.toString().padStart(2,"0");
-    minutesEl.textContent = mins.toString().padStart(2,"0");
-    secondsEl.textContent = secs.toString().padStart(2,"0");
+    daysEl.textContent = days.toString().padStart(2, "0");
+    hoursEl.textContent = hours.toString().padStart(2, "0");
+    minutesEl.textContent = mins.toString().padStart(2, "0");
+    secondsEl.textContent = secs.toString().padStart(2, "0");
   }
 
   updatePromoTimer();
   const timer = setInterval(updatePromoTimer, 1000);
 }
 
-// Initialization
+// ================= INITIALIZATION =================
 document.addEventListener("DOMContentLoaded", () => {
-  state.cart = {}; // Clear cart on page load
+  state.cart = {};
   renderProductsDynamic();
   renderCart();
   initCartDelegation();
@@ -282,14 +353,17 @@ document.addEventListener("DOMContentLoaded", () => {
   staggerAppear(".contact-form, .contact-info", 0.25);
   animateOnScroll();
   initPromoTimer();
+  initHeroFloating();
 
   const menuToggle = document.querySelector(".menu-toggle");
   const navMenu = document.querySelector(".navbar ul");
 
   menuToggle?.addEventListener("click", () => {
     navMenu?.classList.toggle("show");
-    menuToggle.innerHTML = menuToggle.innerHTML === "&#9776;" ? "&times;" : "&#9776;";
+    menuToggle.innerHTML =
+      menuToggle.innerHTML === "&#9776;" ? "&times;" : "&#9776;";
   });
 });
 
 window.addEventListener("scroll", animateOnScroll);
+window.addEventListener("scroll", heroParallax);
