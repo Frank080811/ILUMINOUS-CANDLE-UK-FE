@@ -402,28 +402,42 @@ header.scrolled .navbar a:hover { color: var(--brand); }
 
 
 /* ==================== LOGO ANIMATIONS ================= */
+/* ==================== LOGO (Refined for Professional Look) ==================== */
 .logo {
-  background: var(--brand);
-  padding: 8px;
-  border-radius: 8px;
-  display: inline-block;
-  font-size: 1.8rem;
-  font-weight: 700;
-  font-family: 'Playfair Display', serif;
-  color: #b27b48;
-  letter-spacing: .12em;
-  animation: rotateScale 5s linear infinite;
-  max-width: 200px; /* Limit logo container width */
-  text-align: center;
+  background: none;                  /* Remove bright background for a cleaner look */
+  padding: 4px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 6px;
+  max-width: 160px;                  /* Slightly smaller container */
+  transition: transform 0.4s ease;
 }
 
 .logo img {
-  width: 80px; /* Set a fixed width */
-  height: auto; /* Keep aspect ratio */
+  width: 60px;                       /* Reduced from 80px → 60px */
+  height: auto;
   display: block;
   margin: 0 auto;
-  animation: pulse 2s ease-in-out infinite alternate;
+  transition: transform 0.8s ease, opacity 0.8s ease;
 }
+
+/* Subtle hover animation instead of infinite rotation */
+.logo:hover img {
+  transform: scale(1.05);
+  opacity: 0.9;
+}
+
+/* Optional: Soft entry animation (fade + slight pop) */
+@keyframes logoFadeIn {
+  0% { opacity: 0; transform: scale(0.8); }
+  100% { opacity: 1; transform: scale(1); }
+}
+
+.logo img {
+  animation: logoFadeIn 1.2s ease-out;
+}
+
 
 @keyframes rotateScale {
   0% { transform: rotate(0deg) scale(1); }
