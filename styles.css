@@ -169,6 +169,34 @@ header.scrolled .navbar a:hover { color: var(--brand); }
   justify-content: center;
 }
 
+/* ================== HERO SMOOTH ANIMATION EFFECTS ================== */
+
+/* Float animation for hero text lines */
+@keyframes floatY {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+}
+
+/* Smooth transition for hero parallax */
+.hero-video,
+.hero-content {
+  transition: transform 0.4s ease-out;
+  will-change: transform;
+}
+
+/* Fade & slide-up entry */
+.hero-content {
+  opacity: 0;
+  transform: translateY(40px);
+  animation: fadeUpHero 1.2s ease-out forwards;
+}
+
+@keyframes fadeUpHero {
+  0% { opacity: 0; transform: translateY(40px); filter: blur(8px); }
+  100% { opacity: 1; transform: translateY(0); filter: blur(0); }
+}
+
+
 /* Buttons */
 .btn, .btn-outline {
   padding: 12px 24px;
