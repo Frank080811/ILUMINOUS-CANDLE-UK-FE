@@ -290,5 +290,40 @@ header.scrolled .navbar a:hover { color: var(--brand); }
 }
 .product-card .btn:hover { background: #444; }
 
+
+/* ==================== LOGO (Smaller, Refined, Professional) ==================== */
+.logo {
+  background: none;
+  padding: 2px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 6px;
+  max-width: 120px;       /* Reduced width */
+  transition: transform 0.4s ease;
+}
+
+.logo img {
+  width: 45px;            /* Reduced from 60px → 45px */
+  height: auto;
+  display: block;
+  margin: 0 auto;
+  transition: transform 0.8s ease, opacity 0.8s ease;
+  animation: logoFadeIn 1.2s ease-out;
+}
+
+/* Gentle hover scaling for luxury feel */
+.logo:hover img {
+  transform: scale(1.05);
+  opacity: 0.9;
+}
+
+/* Fade-in entry animation */
+@keyframes logoFadeIn {
+  0% { opacity: 0; transform: scale(0.8); }
+  100% { opacity: 1; transform: scale(1); }
+}
+
+
 /* ==================== CONTACT FORM, PROMO, FOOTER ==================== */
 /* (keep your existing sections here, unchanged for brevity) */
