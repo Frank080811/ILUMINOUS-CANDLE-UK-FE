@@ -259,47 +259,67 @@ function initCheckoutForm() {
 }
 
 // ================= HERO ANIMATIONS =================
+// ================= HERO ANIMATIONS =================
+
+// Variables for motion
 let heroAngle = 0;
-function heroContinuousMotion() {
+let heroScrollY = 0;
+
+function heroContinuousAnimation() {
   const hero = document.querySelector(".hero");
   if (!hero) return;
+
   const video = hero.querySelector(".hero-video");
   const overlay = hero.querySelector(".hero-overlay");
-  heroAngle += 0.05;
+  const content = hero.querySelector(".hero-content");
 
-  // Subtle video sway
+  heroAngle += 0.02; // smooth speed
+
+  // Subtle sway on the hero video
   if (video) {
-    video.style.transform = `scale(1.05) translateY(${Math.sin(heroAngle) * 10}px)`;
+    const yOffset = Math.sin(heroAngle) * 10;
+    const scale = 1.05 + Math.sin(heroAngle / 3) * 0.01;
+    video.style.transform = `translateY(${yOffset}px) scale(${scale})`;
   }
 
-  // Breathing overlay effect
+  // Breathing overlay (ambient pulsing darkness)
   if (overlay) {
-    overlay.style.backgroundColor = `rgba(0, 0, 0, ${0.3 + 0.1 * Math.sin(heroAngle / 2)})`;
+    overlay.style.backgroundColor = `rgba(0, 0, 0, ${0.35 + 0.15 * Math.sin(heroAngle / 2)})`;
   }
 
-  requestAnimationFrame(heroContinuousMotion);
+  // Slight vertical floating for hero content
+  if (content) {
+    const floatY = Math.sin(heroAngle / 2) * 6;
+    content.style.transform = `translateY(${floatY}px)`;
+  }
+
+  requestAnimationFrame(heroContinuousAnimation);
 }
 
+// Smooth parallax motion on scroll
 function heroParallax() {
   const hero = document.querySelector(".hero");
   if (!hero) return;
 
   const video = hero.querySelector(".hero-video");
-  const content = hero.querySelector(".hero-content");
-  const scrollTop = window.scrollY;
-  const speed = 0.3;
+  const scrollTop = window.scrollY * 0.25;
 
-  if (video) video.style.transform = `translateY(${scrollTop * speed * 0.5}px) scale(1.05)`;
-  if (content) content.style.transform = `translateY(${scrollTop * -speed * 0.5}px)`;
+  if (video) video.style.transform += ` translateY(${scrollTop}px)`; // additive parallax
 }
 
+// Floating hero text lines
 function initHeroFloating() {
   const heroTexts = document.querySelectorAll(".hero h1 span");
   heroTexts.forEach((el, i) => {
-    el.style.animation = `floatY 6s ease-in-out ${i * 1}s infinite`;
+    el.style.animation = `floatY 5s ease-in-out ${i * 0.8}s infinite alternate`;
   });
-  requestAnimationFrame(heroContinuousMotion);
+
+  // Begin continuous background animation
+  requestAnimationFrame(heroContinuousAnimation);
 }
+
+window.addEventListener("scroll", heroParallax);
+
 
 // ================= PROMO TIMER =================
 function initPromoTimer() {
