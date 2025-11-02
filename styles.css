@@ -324,6 +324,424 @@ header.scrolled .navbar a:hover { color: var(--brand); }
   100% { opacity: 1; transform: scale(1); }
 }
 
+.contact-section {
+  padding: 60px 0;
+}
 
-/* ==================== CONTACT FORM, PROMO, FOOTER ==================== */
-/* (keep your existing sections here, unchanged for brevity) */
+.contact-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 30px;
+  justify-content: space-between;
+}
+
+.contact-form,
+.contact-info {
+  flex: 1 1 350px;
+  background: var(--card);
+  padding: 2rem;
+  border-radius: 16px;
+  color: #fff;
+}
+
+.contact-form input,
+.contact-form select {
+  width: 100%;
+  padding: 0.8rem 1rem;
+  border-radius: 12px;
+  background: var(--glass);
+  border: 1px solid var(--stroke);
+  color: var(--text);
+  margin-bottom: 1rem;
+  appearance: none;
+}
+
+/* 🔹 Dropdown customization */
+.contact-form select {
+  background-color: #000; /* Black background */
+  color: #fff;            /* White text for contrast */
+  border: 1px solid #444;
+  cursor: pointer;
+}
+
+/* 🔹 Ensure dropdown list items are visible */
+.contact-form select option {
+  background-color: #000; /* Black list background */
+  color: #fff;            /* White text */
+}
+
+/* 🔹 Improve focus visibility */
+.contact-form select:focus,
+.contact-form input:focus {
+  border-color: #00bcd4;
+  outline: none;
+  box-shadow: 0 0 6px rgba(0, 188, 212, 0.6);
+}
+
+.submit-btn {
+  background: var(--brand);
+  color: #111;
+  padding: 1rem;
+  border-radius: 12px;
+  cursor: pointer;
+  width: 100%;
+  border: none;
+  font-weight: 600;
+}
+
+.submit-btn:hover {
+  background: var(--brand-2);
+  color: #fff;
+}
+
+/* ==================== FOOTER =================== */
+footer {
+  background: var(--card);
+  color: var(--muted);
+  padding: 50px 20px;
+}
+.footer-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 40px;
+}
+.footer-col h4 { color: var(--brand); margin-bottom: 18px; }
+.footer-col ul { list-style: none; }
+.footer-col ul li { margin-bottom: 12px; }
+.footer-col ul li a { color: var(--muted); transition: 0.3s; }
+.footer-col ul li a:hover { color: var(--brand); }
+.sub-footer {
+  text-align: center;
+  margin-top: 40px;
+  font-size: 0.85rem;
+  color: #777;
+}
+
+/* ==================== RESPONSIVE =================== */
+@media (max-width: 1200px) {
+  .productGrid { grid-template-columns: repeat(4, 1fr); }
+}
+@media (max-width: 900px) {
+  .productGrid { grid-template-columns: repeat(3, 1fr); }
+  .contact-container { flex-direction: column; }
+}
+@media (max-width: 600px) {
+  .productGrid { grid-template-columns: repeat(2, 1fr); }
+}
+@media (max-width: 400px) {
+  .productGrid { grid-template-columns: repeat(1, 1fr); }
+}
+@media (max-width: 768px) {
+  .navbar { 
+    display: none; 
+    flex-direction: column; 
+    position: absolute; 
+    top: 70px; 
+    right: 0; 
+    width: 200px; 
+    background: #fff; 
+    padding: 10px; 
+  }
+  .navbar.active { display: flex; }
+  .menu-toggle { display: block; }
+}
+
+/* ==================== PRODUCTS SECTION ==================== */
+.products {
+  background: #fafafa;
+  padding: 80px 20px;
+  text-align: center;
+}
+
+.section-title {
+  font-size: 2rem;
+  color: #222;
+  margin-bottom: 40px;
+  font-weight: 700;
+  letter-spacing: 1px;
+}
+
+.products-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 2rem;
+  justify-content: center;
+  align-items: stretch;
+}
+
+.product-card {
+  background: #fff;
+  border-radius: 14px;
+  padding: 18px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  text-align: center;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.product-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+}
+
+.product-card img {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+  border-radius: 12px;
+  margin-bottom: 1rem;
+  transition: transform 0.5s ease, filter 0.5s ease;
+}
+
+.product-card:hover img {
+  transform: scale(1.05);
+  filter: brightness(0.9);
+}
+
+.product-card h3 {
+  font-size: 1.2rem;
+  color: #333;
+  margin-bottom: 0.4rem;
+  font-weight: 600;
+}
+
+.product-card .price {
+  color: #d4a017;
+  font-weight: bold;
+  font-size: 1.1rem;
+  margin-bottom: 1rem;
+}
+
+/* ==================== VIEW PRODUCT BUTTON ==================== */
+.btn-view {
+  display: inline-block;
+  padding: 10px 20px;
+  border-radius: 10px;
+  border: 2px solid #d4a017;
+  color: #d4a017;
+  font-weight: 600;
+  font-size: 0.95rem;
+  transition: all 0.3s ease;
+  text-decoration: none;
+  margin-top: auto; /* ensures button sits at bottom */
+}
+
+.btn-view:hover {
+  background: #d4a017;
+  color: #fff;
+  transform: translateY(-3px);
+  box-shadow: 0 4px 10px rgba(212, 160, 23, 0.4);
+}
+
+/* ==================== PROMO SECTION ==================== */
+.promo-section {
+  position: relative;
+  background: url('images/candle-bg.jpg') center/cover no-repeat;
+  color: #fff;
+  text-align: center;
+  padding: 120px 20px;
+  overflow: hidden;
+  border-radius: 0;
+  margin-top: 4rem;
+}
+
+.promo-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, rgba(0,0,0,0.7), rgba(0,0,0,0.3));
+  z-index: 1;
+  transition: opacity 1.5s ease;
+}
+
+.promo-content {
+  position: relative;
+  z-index: 2;
+  max-width: 800px;
+  margin: 0 auto;
+  animation: fadeUp 1.4s ease-out forwards;
+}
+
+.promo-title {
+  font-family: "Playfair Display", serif;
+  font-size: 2.5rem;
+  margin-bottom: 1rem;
+  color: #ffb703;
+  animation: floatY 5s ease-in-out infinite alternate;
+}
+
+.promo-text {
+  font-size: 1.15rem;
+  line-height: 1.8;
+  margin-bottom: 2rem;
+  color: #f5f5f5;
+}
+
+.promo-text span {
+  color: #ffb703;
+  font-weight: bold;
+}
+
+.promo-btn {
+  display: inline-block;
+  background: #ffb703;
+  color: #111;
+  padding: 14px 36px;
+  border-radius: 12px;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  text-decoration: none;
+  transition: all 0.3s ease-in-out;
+  box-shadow: 0 6px 20px rgba(255, 183, 3, 0.3);
+}
+
+.promo-btn:hover {
+  background: #ffd166;
+  color: #000;
+  transform: translateY(-3px);
+  box-shadow: 0 10px 25px rgba(255, 183, 3, 0.4);
+}
+
+/* === Animation Keyframes === */
+@keyframes fadeUp {
+  0% { opacity: 0; transform: translateY(40px); }
+  100% { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes floatY {
+  0% { transform: translateY(0); }
+  50% { transform: translateY(-8px); }
+  100% { transform: translateY(0); }
+}
+
+/* === Responsive Adjustments === */
+@media (max-width: 768px) {
+  .promo-title {
+    font-size: 2rem;
+  }
+  .promo-text {
+    font-size: 1rem;
+  }
+  .promo-btn {
+    padding: 12px 28px;
+    font-size: 0.95rem;
+  }
+}
+
+/* ==================== ADVANCED FILTER BAR ==================== */
+.filter-bar {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 1.2rem;
+  background: rgba(255, 255, 255, 0.6);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  padding: 1.5rem 2rem;
+  border-radius: 16px;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.08);
+  margin: 3rem auto 2rem;
+  transition: all 0.4s ease-in-out;
+  max-width: 900px;
+}
+
+.filter-bar:hover {
+  box-shadow: 0 10px 30px rgba(0,0,0,0.12);
+  transform: translateY(-3px);
+}
+
+/* === Dropdown Style === */
+.filter-bar select {
+  appearance: none;
+  background: linear-gradient(145deg, #ffffff, #f3f3f3);
+  color: #333;
+  font-weight: 500;
+  font-size: 1rem;
+  padding: 0.8rem 2.5rem 0.8rem 1rem;
+  border-radius: 10px;
+  border: 1.5px solid #ddd;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+  position: relative;
+  min-width: 180px;
+}
+
+/* Hover & Focus Effects */
+.filter-bar select:hover {
+  border-color: #ffb703;
+  background: #fff;
+  box-shadow: 0 4px 10px rgba(255, 183, 3, 0.2);
+}
+
+.filter-bar select:focus {
+  outline: none;
+  border-color: #ffb703;
+  box-shadow: 0 0 10px rgba(255, 183, 3, 0.3);
+}
+
+/* Custom dropdown arrow */
+.filter-bar select::after {
+  content: "▼";
+  font-size: 0.8rem;
+  color: #ffb703;
+  position: absolute;
+  right: 1rem;
+  top: 50%;
+  transform: translateY(-50%);
+  pointer-events: none;
+}
+
+/* === Filter Button === */
+#applyFilters {
+  background: linear-gradient(135deg, #ffb703, #ff8800);
+  color: #111;
+  font-weight: 600;
+  border: none;
+  border-radius: 10px;
+  padding: 0.8rem 1.6rem;
+  cursor: pointer;
+  transition: all 0.3s ease-in-out;
+  box-shadow: 0 5px 14px rgba(255, 183, 3, 0.3);
+}
+
+#applyFilters:hover {
+  background: linear-gradient(135deg, #ffcc33, #ffaa00);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(255, 183, 3, 0.4);
+}
+
+/* === Responsive Design === */
+@media (max-width: 768px) {
+  .filter-bar {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 1rem;
+  }
+
+  .filter-bar select, #applyFilters {
+    width: 100%;
+  }
+}
+
+#applyFilters {
+  animation: glowPulse 3s ease-in-out infinite;
+}
+
+@keyframes glowPulse {
+  0%, 100% { box-shadow: 0 0 10px rgba(255, 183, 3, 0.2); }
+  50% { box-shadow: 0 0 20px rgba(255, 183, 3, 0.5); }
+}
+
+
+
+/* ==================== RESPONSIVE DESIGN ==================== */
+@media (max-width: 768px) {
+  .section-title {
+    font-size: 1.7rem;
+  }
+  .product-card img {
+    height: 180px;
+  }
+}

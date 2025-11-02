@@ -39,7 +39,7 @@ const products = [
   { name: "Christmas Kiss", price: 25, img: "images/Christmas_Kiss.png", category: "sweet" },
   { name: "Golden Nector", price: 25, img: "images/Golden_Nector.png", category: "floral" },
   { name: "Hamptons Breeze", price: 25, img: "images/Hamptons_Breeze.png", category: "floral" },
-  { name: "Holy Berry", price: 25, img: "images/berry.png.png", category: "fruity" },
+  { name: "Holy Berry", price: 25, img: "images/berry.png", category: "fruity" },
   { name: "Lemon & Lavender", price: 25, img: "images/Lemon_Lavender.png", category: "woody" },
   { name: "Lemongrass Elixir", price: 25, img: "images/Lemongrass_Elixir.png", category: "fresh" },
   { name: "Take Me Away", price: 25, img: "images/Take_Me_Away.png", category: "fresh" },
