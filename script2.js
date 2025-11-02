@@ -259,12 +259,7 @@ function initCheckoutForm() {
 }
 
 // ================= HERO ANIMATIONS =================
-// ================= HERO ANIMATIONS =================
-
-// Variables for motion
 let heroAngle = 0;
-let heroScrollY = 0;
-
 function heroContinuousAnimation() {
   const hero = document.querySelector(".hero");
   if (!hero) return;
@@ -273,21 +268,18 @@ function heroContinuousAnimation() {
   const overlay = hero.querySelector(".hero-overlay");
   const content = hero.querySelector(".hero-content");
 
-  heroAngle += 0.02; // smooth speed
+  heroAngle += 0.02;
 
-  // Subtle sway on the hero video
   if (video) {
     const yOffset = Math.sin(heroAngle) * 10;
     const scale = 1.05 + Math.sin(heroAngle / 3) * 0.01;
     video.style.transform = `translateY(${yOffset}px) scale(${scale})`;
   }
 
-  // Breathing overlay (ambient pulsing darkness)
   if (overlay) {
     overlay.style.backgroundColor = `rgba(0, 0, 0, ${0.35 + 0.15 * Math.sin(heroAngle / 2)})`;
   }
 
-  // Slight vertical floating for hero content
   if (content) {
     const floatY = Math.sin(heroAngle / 2) * 6;
     content.style.transform = `translateY(${floatY}px)`;
@@ -296,30 +288,24 @@ function heroContinuousAnimation() {
   requestAnimationFrame(heroContinuousAnimation);
 }
 
-// Smooth parallax motion on scroll
 function heroParallax() {
   const hero = document.querySelector(".hero");
   if (!hero) return;
 
   const video = hero.querySelector(".hero-video");
   const scrollTop = window.scrollY * 0.25;
-
-  if (video) video.style.transform += ` translateY(${scrollTop}px)`; // additive parallax
+  if (video) video.style.transform += ` translateY(${scrollTop}px)`;
 }
 
-// Floating hero text lines
 function initHeroFloating() {
   const heroTexts = document.querySelectorAll(".hero h1 span");
   heroTexts.forEach((el, i) => {
     el.style.animation = `floatY 5s ease-in-out ${i * 0.8}s infinite alternate`;
   });
-
-  // Begin continuous background animation
   requestAnimationFrame(heroContinuousAnimation);
 }
 
 window.addEventListener("scroll", heroParallax);
-
 
 // ================= PROMO TIMER =================
 function initPromoTimer() {
@@ -375,14 +361,21 @@ document.addEventListener("DOMContentLoaded", () => {
   initPromoTimer();
   initHeroFloating();
 
+  // ===== MOBILE MENU LOGIC =====
   const menuToggle = document.querySelector(".menu-toggle");
-  const navMenu = document.querySelector(".navbar ul");
+  const navbar = document.querySelector(".navbar");
 
-  menuToggle?.addEventListener("click", () => {
-    navMenu?.classList.toggle("show");
-    menuToggle.innerHTML =
-      menuToggle.innerHTML === "&#9776;" ? "&times;" : "&#9776;";
-  });
+  if (menuToggle && navbar) {
+    menuToggle.addEventListener("click", () => {
+      navbar.classList.toggle("active");
+      menuToggle.classList.toggle("open");
+    });
+
+    // Close menu automatically when a link is clicked
+    navbar.querySelectorAll("a").forEach((link) =>
+      link.addEventListener("click", () => navbar.classList.remove("active"))
+    );
+  }
 });
 
 window.addEventListener("scroll", animateOnScroll);
