@@ -1,61 +1,66 @@
+// ================== SMALL HELPERS ==================
 const $ = (sel, parent = document) => parent.querySelector(sel);
 const $$ = (sel, parent = document) => parent.querySelectorAll(sel);
 
-// ================= HEADER SCROLL EFFECT =================
+function money(v) {
+  return "£" + Number(v || 0).toFixed(2);
+}
+
+// ================== HEADER SCROLL EFFECT ==================
 window.addEventListener("scroll", () => {
   const header = $("header");
-  header?.classList.toggle("scrolled", window.scrollY > 40);
+  if (header) header.classList.toggle("scrolled", window.scrollY > 40);
 });
 
-// ================= STAGGERED ANIMATIONS =================
-function staggerAppear(selector, delay = 0.15) {
-  $$(selector).forEach((el, i) =>
-    setTimeout(() => el.classList.add("appear"), i * delay * 1000)
-  );
-}
-
-function animateOnScroll() {
-  const animEls = $$(".fade-up, .fade-left, .fade-right");
-  const triggerBottom = window.innerHeight * 0.85;
-  animEls.forEach((el) => {
-    if (el.getBoundingClientRect().top < triggerBottom)
-      el.classList.add("appear");
-  });
-}
-
-// ================= STATE =================
+// ================== STATE ==================
 let state = {
   cart: {},
   orders: JSON.parse(localStorage.getItem("lumina_orders") || "[]"),
   coupon: null,
 };
 
-// ================= PRODUCTS =================
+// ================== PRODUCT CATALOG (for categories page) ==================
 const products = [
-  { name: "Aqua Surge", price: 25, img: "images/Aqua_Surge.png", category: "floral" },
-  { name: "Autumn Indulgence", price: 25, img: "images/Autumn_Indulgence.png", category: "woody" },
-  { name: "Bergamot Bloom", price: 25, img: "images/Bergamot_Bloom.png", category: "citrus" },
-  { name: "Cashmere Dreams", price: 25, img: "images/Cashmere_Dreams.png", category: "vanilla" },
-  { name: "Christmas Kiss", price: 25, img: "images/Christmas_Kiss.png", category: "sweet" },
-  { name: "Golden Nector", price: 25, img: "images/Golden_Nector.png", category: "floral" },
-  { name: "Hamptons Breeze", price: 25, img: "images/Hamptons_Breeze.png", category: "floral" },
-  { name: "Holy Berry", price: 25, img: "images/berry.png", category: "fruity" },
-  { name: "Lemon & Lavender", price: 25, img: "images/Lemon_Lavender.png", category: "woody" },
-  { name: "Lemongrass Elixir", price: 25, img: "images/Lemongrass_Elixir.png", category: "fresh" },
-  { name: "Take Me Away", price: 25, img: "images/Take_Me_Away.png", category: "fresh" },
-  { name: "Mocha Delight", price: 25, img: "images/Mocha_Delight.png", category: "floral" },
-  { name: "Mojito Millionaire", price: 25, img: "images/Mojito_Millionaire.png", category: "floral" },
-  { name: "Mystic Woods", price: 25, img: "images/Mystic_Woods.png", category: "fruity" },
-  { name: "Strawberry Vanilla", price: 25, img: "images/Strawberry_Vanilla.png", category: "woody" },
+  { name: "Peach N Ginger", price: 25, img: "images/peachnginger.jpeg", category: "floral" },
+  { name: "Arctic Ice", price: 25, img: "images/Arctic_Ice.jpg", category: "floral" },
+  { name: "Coastal Couture", price: 25, img: "images/coastalcouture.jpeg", category: "floral" },
+  { name: "Autumne Embrace", price: 25, img: "images/autumneembrace.jpeg", category: "floral" },
+  { name: "Autumne Spice", price: 25, img: "images/autumnespice.jpeg", category: "floral" },
+  { name: "Autumne Indulgence", price: 25, img: "images/autumneindulgence.jpeg", category: "floral" },
+  { name: "Citrus Burst", price: 25, img: "images/citrusburst.jpeg", category: "floral" },
+  { name: "Coastal Sanctuary", price: 25, img: "images/coastalsanctuary.jpeg", category: "floral" },
+  { name: "Cozy Nook", price: 25, img: "images/cozynook.jpeg", category: "floral" },
+  { name: "Eucalyptus Escape", price: 25, img: "images/eucolatusescappe.jpeg", category: "floral" },
+  { name: "Cozy Comfort", price: 25, img: "images/cozycomfort.jpeg", category: "floral" },
+  { name: "Intrigue", price: 25, img: "images/intrigue.jpeg", category: "floral" },
+  { name: "Golden Magic", price: 25, img: "images/goldenmagic.jpeg", category: "floral" },
+  { name: "Fallin' 4 U", price: 25, img: "images/fallin4u.jpeg", category: "floral" },
+  { name: "Spa serenity", price: 25, img: "images/spaserenity.jpeg", category: "floral" },
+  { name: "Lavender", price: 25, img: "images/lavender.jpeg", category: "floral" },
+  { name: "Lavender", price: 25, img: "images/lavender.jpeg", category: "floral" },
+  { name: "Lemon Luster", price: 25, img: "images/lavender.jpeg", category: "floral" },
+  { name: "Lemonade Bash", price: 25, img: "images/lavender.jpeg", category: "floral" },
+  { name: "Mango Madness", price: 25, img: "images/lavender.jpeg", category: "floral" },
+  { name: "Midnight Snow.jpg", price: 25, img: "images/lavender.jpeg", category: "floral" },
+  { name: "Mystic Woods", price: 25, img: "images/lavender.jpeg", category: "floral" },
+  { name: "Orchid Oasis", price: 25, img: "images/Olavender.jpeg", category: "floral" },
+  { name: "Patchouli Amber", price: 25, img: "images/lavender.jpeg", category: "floral" },
+  { name: "Renewed", price: 25, img: "images/lavender.jpeg", category: "floral" },
+  { name: "Royal Pine", price: 25, img: "images/lavender.jpeg", category: "floral" },
+  { name: "Saffron Royal", price: 25, img: "images/lavender.jpeg", category: "floral" },
+  { name: "Secret Garden", price: 25, img: "images/lavender.jpeg", category: "floral" },
+  { name: "Seduction", price: 25, img: "images/lavender.jpeg", category: "floral" },
+  { name: "Spa Serenity", price: 25, img: "images/lavender.jpeg", category: "floral" },
+  { name: "Sweet Figs", price: 25, img: "images/lavender.jpeg", category: "floral" },
+  { name: "The Alchemist", price: 25, img: "images/lavender.jpeg", category: "floral" },
+  { name: "Tropical Twist", price: 25, img: "images/lavender.jpeg", category: "floral" },
+  { name: "Winter Spice", price: 25, img: "images/lavender.jpeg", category: "floral" },
+  { name: "Winter Woods", price: 25, img: "images/lavender.jpeg", category: "floral" },
 ];
 
-function money(v) {
-  return `£${v.toFixed(2)}`;
-}
+// ================== PRODUCT RENDERING ==================
+const productGrid = $(".products-grid");
 
-const productGrid = $(".productGrid");
-
-// ================= RENDER PRODUCTS =================
 function renderProductsDynamic(list = products) {
   if (!productGrid) return;
 
@@ -68,24 +73,28 @@ function renderProductsDynamic(list = products) {
       <img src="${p.img}" alt="${p.name}">
       <h3>${p.name}</h3>
       <p class="price">${money(p.price)}</p>
-      <button class="btn add-to-cart" data-name="${p.name}" data-price="${p.price}">🛒 Add</button>
+      <button 
+        class="btn add-to-cart-btn" 
+        data-name="${p.name}" 
+        data-price="${p.price}" 
+        data-img="${p.img}">
+        <i class="fa-solid fa-cart-plus"></i>&nbsp;Add
+      </button>
     `;
     productGrid.appendChild(card);
-    setTimeout(() => card.classList.add("appear"), i * 100);
+    setTimeout(() => card.classList.add("appear"), i * 80);
   });
-
-  productGrid.style.display = "grid";
-  productGrid.style.gridTemplateColumns = "repeat(5, 1fr)";
-  productGrid.style.gap = "20px";
 }
 
-// ================= FILTERS =================
+// ================== FILTERING (categories.html only) ==================
 const categoryFilter = $("#category");
 const priceFilter = $("#price");
 const sortFilter = $("#sort");
 const applyFiltersBtn = $("#applyFilters");
 
 function filterProducts() {
+  if (!productGrid) return;
+
   const category = categoryFilter?.value || "all";
   const price = priceFilter?.value || "all";
   const sort = sortFilter?.value || "default";
@@ -108,11 +117,119 @@ function filterProducts() {
 
 applyFiltersBtn?.addEventListener("click", filterProducts);
 
-// ================= CART LOGIC =================
+// ================== INDEX PAGE — ADVANCED SLIDER ==================
+function initHomeSlider() {
+  const homeGrid = $(".home-products-grid");
+  const prev = $("#homePrev");
+  const next = $("#homeNext");
+
+  if (!homeGrid || !prev || !next) return; // only index.html
+
+  function updateButtons() {
+    prev.classList.toggle("disabled", homeGrid.scrollLeft <= 10);
+    const max = homeGrid.scrollWidth - homeGrid.clientWidth - 10;
+    next.classList.toggle("disabled", homeGrid.scrollLeft >= max);
+  }
+
+  prev.addEventListener("click", () => {
+    homeGrid.scrollBy({ left: -280, behavior: "smooth" });
+    setTimeout(updateButtons, 350);
+  });
+
+  next.addEventListener("click", () => {
+    homeGrid.scrollBy({ left: 280, behavior: "smooth" });
+    setTimeout(updateButtons, 350);
+  });
+
+  homeGrid.addEventListener("scroll", updateButtons);
+
+  updateButtons();
+}
+
+// ================== CART PERSISTENCE ==================
+function loadCartFromStorage() {
+  try {
+    const saved = JSON.parse(localStorage.getItem("lumina_cart") || "{}");
+    if (saved && typeof saved === "object") state.cart = saved;
+  } catch {
+    state.cart = {};
+  }
+}
+
 function saveCart() {
   localStorage.setItem("lumina_cart", JSON.stringify(state.cart));
 }
 
+// ================== CART UI (DRAWER + FLOAT ICON + CHECKOUT PAGE) ==================
+const checkoutBody = $("#cartItems");
+const checkoutTotal = $("#cartTotal");
+const drawer = $("#cartDrawer");
+const drawerItems = $("#drawerItems");
+const drawerSubtotal = $("#drawerSubtotal");
+const floatingCartCount = $("#floatingCartCount");
+
+function renderCart() {
+  const items = Object.values(state.cart);
+
+  // Checkout page
+  if (checkoutBody && checkoutTotal) {
+    checkoutBody.innerHTML = "";
+    if (!items.length) {
+      checkoutBody.innerHTML = `<tr><td colspan="5" class="empty-cart">Your cart is empty</td></tr>`;
+      checkoutTotal.textContent = "0.00";
+    } else {
+      let subtotal = 0;
+      items.forEach((i) => {
+        const lineTotal = i.price * i.qty;
+        subtotal += lineTotal;
+
+        const row = document.createElement("tr");
+        row.innerHTML = `
+          <td>${i.name}</td>
+          <td>${money(i.price)}</td>
+          <td><input type="number" value="${i.qty}" min="1" class="qty-input" data-name="${i.name}"></td>
+          <td>${money(lineTotal)}</td>
+          <td><button class="remove-btn" data-name="${i.name}">❌</button></td>
+        `;
+        checkoutBody.appendChild(row);
+      });
+
+      const shipping = subtotal > 50 ? 0 : 5.99;
+      const total = subtotal + shipping;
+      checkoutTotal.textContent = total.toFixed(2);
+    }
+  }
+
+  // Drawer
+  if (drawerItems && drawerSubtotal) {
+    drawerItems.innerHTML = "";
+    if (!items.length) {
+      drawerItems.innerHTML = `<p class="empty-cart">Your cart is empty</p>`;
+      drawerSubtotal.textContent = money(0);
+    } else {
+      let subtotal = 0;
+      items.forEach((i) => {
+        subtotal += i.price * i.qty;
+        const el = document.createElement("div");
+        el.className = "cart-item";
+        el.innerHTML = `
+          <img src="${i.img}">
+          <div><h4>${i.name}</h4><p>${i.qty} × ${money(i.price)}</p></div>
+        `;
+        drawerItems.appendChild(el);
+      });
+      drawerSubtotal.textContent = money(subtotal);
+    }
+  }
+
+  // Floating count
+  if (floatingCartCount) {
+    const count = items.reduce((a, b) => a + b.qty, 0);
+    floatingCartCount.textContent = String(count);
+  }
+}
+
+// ================== CART ACTIONS ==================
 function toast(msg) {
   const el = document.createElement("div");
   el.textContent = msg;
@@ -125,7 +242,7 @@ function toast(msg) {
     border: "1px solid #fff",
     padding: "10px 14px",
     borderRadius: "12px",
-    zIndex: "100",
+    zIndex: "10000",
     color: "#fff",
   });
   document.body.appendChild(el);
@@ -136,12 +253,14 @@ function toast(msg) {
   }, 1300);
 }
 
-function addToCart(name, price) {
-  if (!state.cart[name]) state.cart[name] = { name, price, qty: 1 };
-  else state.cart[name].qty++;
+function addToCart(name, price, img) {
+  if (!state.cart[name]) {
+    state.cart[name] = { name, price, qty: 1, img };
+  } else {
+    state.cart[name].qty++;
+  }
   saveCart();
   renderCart();
-  toast(`${name} added to cart`);
 }
 
 function removeFromCart(name) {
@@ -151,6 +270,7 @@ function removeFromCart(name) {
 }
 
 function updateQty(name, qty) {
+  qty = Number(qty);
   if (qty <= 0) removeFromCart(name);
   else {
     state.cart[name].qty = qty;
@@ -159,55 +279,42 @@ function updateQty(name, qty) {
   }
 }
 
-function renderCart() {
-  const cartBody = $("#cartItems");
-  const cartTotal = $("#cartTotal");
-  if (!cartBody || !cartTotal) return;
-
-  const items = Object.values(state.cart);
-  cartBody.innerHTML = "";
-  if (!items.length) {
-    cartBody.innerHTML =
-      '<tr><td colspan="5" class="empty-cart">Your cart is empty</td></tr>';
-    cartTotal.textContent = "0.00";
-    return;
-  }
-
-  let subtotal = 0;
-  items.forEach((i) => {
-    const row = document.createElement("tr");
-    const itemSubtotal = i.price * i.qty;
-    subtotal += itemSubtotal;
-    row.innerHTML = `
-      <td>${i.name}</td>
-      <td>${money(i.price)}</td>
-      <td><input type="number" min="1" value="${i.qty}" class="qty-input" data-name="${i.name}"></td>
-      <td>${money(itemSubtotal)}</td>
-      <td><button class="remove-btn" data-name="${i.name}">❌</button></td>
-    `;
-    cartBody.appendChild(row);
-  });
-
-  const shipping = subtotal > 50 ? 0 : 5.99;
-  const total = (subtotal + shipping).toFixed(2);
-  cartTotal.textContent = total;
-}
-
+// ================== EVENT DELEGATION ==================
 function initCartDelegation() {
   document.body.addEventListener("click", (e) => {
-    const btn = e.target.closest(".add-to-cart");
-    if (btn) addToCart(btn.dataset.name, parseFloat(btn.dataset.price));
-    if (e.target.classList.contains("remove-btn"))
+    const addBtn = e.target.closest(".add-to-cart-btn");
+    if (addBtn) {
+      const { name, price, img } = addBtn.dataset;
+      addToCart(name, Number(price), img);
+      toast(`${name} added to cart`);
+      return;
+    }
+
+    if (e.target.classList.contains("remove-btn")) {
       removeFromCart(e.target.dataset.name);
+      return;
+    }
+
+    if (e.target.closest(".floating-checkout")) {
+      e.preventDefault();
+      drawer?.classList.add("open");
+      return;
+    }
+
+    if (e.target === $("#closeCart")) {
+      drawer?.classList.remove("open");
+      return;
+    }
   });
 
   document.body.addEventListener("input", (e) => {
-    if (e.target.classList.contains("qty-input"))
-      updateQty(e.target.dataset.name, parseInt(e.target.value));
+    if (e.target.classList.contains("qty-input")) {
+      updateQty(e.target.dataset.name, e.target.value);
+    }
   });
 }
 
-// ================= CHECKOUT =================
+// ================== CHECKOUT FORM ==================
 const API_URL = "https://iluminous-candle-uk-be.onrender.com";
 
 function initCheckoutForm() {
@@ -216,10 +323,10 @@ function initCheckoutForm() {
 
   checkoutForm.addEventListener("submit", async (e) => {
     e.preventDefault();
-    const items = Object.values(state.cart);
-    if (!items.length) return toast("Your cart is empty");
+    const cartItems = Object.values(state.cart);
+    if (!cartItems.length) return toast("Your cart is empty.");
 
-    const customerInfo = {
+    const customer = {
       fullName: checkoutForm.fullName.value,
       email: checkoutForm.email.value,
       phone: checkoutForm.phone.value,
@@ -229,154 +336,117 @@ function initCheckoutForm() {
       zip: checkoutForm.zip.value,
       country: checkoutForm.country.value,
     };
-    localStorage.setItem("lumina_customer", JSON.stringify(customerInfo));
 
-    const subtotal = items.reduce((sum, i) => sum + i.price * i.qty, 0);
+    localStorage.setItem("lumina_customer", JSON.stringify(customer));
+
+    const subtotal = cartItems.reduce((a, b) => a + b.qty * b.price, 0);
     const shipping = subtotal > 50 ? 0 : 5.99;
-    const total = (subtotal + shipping).toFixed(2);
 
-    const orderData = {
-      customer: customerInfo,
-      cart: items,
-      total: parseFloat(total),
+    const payload = {
+      customer,
+      cart: cartItems,
+      total: Number(subtotal + shipping),
     };
-    toast("Creating checkout session...");
+
+    toast("Processing payment...");
+
     try {
       const res = await fetch(`${API_URL}/create-checkout-session`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(orderData),
-        mode: "cors",
+        body: JSON.stringify(payload),
       });
-      const data = await res.json().catch(() => ({}));
-      if (!res.ok) throw new Error(data.detail || "Checkout error");
+
+      const data = await res.json();
       if (data.url) window.location.href = data.url;
-      else toast("Checkout failed — no URL returned");
+      else toast("Checkout failed.");
     } catch (err) {
-      toast("Checkout failed: " + err.message);
+      toast("Payment error: " + err.message);
     }
   });
 }
 
-// ================= HERO ANIMATIONS =================
-let heroAngle = 0;
-function heroContinuousAnimation() {
-  const hero = document.querySelector(".hero");
-  if (!hero) return;
-
-  const video = hero.querySelector(".hero-video");
-  const overlay = hero.querySelector(".hero-overlay");
-  const content = hero.querySelector(".hero-content");
-
-  heroAngle += 0.02;
-
-  if (video) {
-    const yOffset = Math.sin(heroAngle) * 10;
-    const scale = 1.05 + Math.sin(heroAngle / 3) * 0.01;
-    video.style.transform = `translateY(${yOffset}px) scale(${scale})`;
-  }
-
-  if (overlay) {
-    overlay.style.backgroundColor = `rgba(0, 0, 0, ${0.35 + 0.15 * Math.sin(heroAngle / 2)})`;
-  }
-
-  if (content) {
-    const floatY = Math.sin(heroAngle / 2) * 6;
-    content.style.transform = `translateY(${floatY}px)`;
-  }
-
-  requestAnimationFrame(heroContinuousAnimation);
-}
-
-function heroParallax() {
-  const hero = document.querySelector(".hero");
-  if (!hero) return;
-
-  const video = hero.querySelector(".hero-video");
-  const scrollTop = window.scrollY * 0.25;
-  if (video) video.style.transform += ` translateY(${scrollTop}px)`;
-}
-
+// ================== HERO FLOATING TEXT ==================
 function initHeroFloating() {
-  const heroTexts = document.querySelectorAll(".hero h1 span");
-  heroTexts.forEach((el, i) => {
-    el.style.animation = `floatY 5s ease-in-out ${i * 0.8}s infinite alternate`;
+  const spans = document.querySelectorAll(".hero h1 span");
+  spans.forEach((el, i) => {
+    el.style.animation = `floatY 6s ease-in-out ${i * 0.6}s infinite alternate`;
   });
-  requestAnimationFrame(heroContinuousAnimation);
 }
 
-window.addEventListener("scroll", heroParallax);
-
-// ================= PROMO TIMER =================
+// ================== PROMO TIMER ==================
 function initPromoTimer() {
-  const promoContainer = document.querySelector(".promo-timer");
-  if (!promoContainer) return;
-  const promoEnd = new Date("2025-10-30T23:59:59");
+  const promo = $(".promo-timer");
+  if (!promo) return;
 
-  promoContainer.innerHTML = `
+  const end = new Date("2025-10-30T23:59:59");
+  promo.innerHTML = `
     <div class="time-box"><span id="days">00</span><small>Days</small></div>
     <div class="time-box"><span id="hours">00</span><small>Hours</small></div>
     <div class="time-box"><span id="minutes">00</span><small>Minutes</small></div>
     <div class="time-box"><span id="seconds">00</span><small>Seconds</small></div>
   `;
 
-  const daysEl = $("#days", promoContainer);
-  const hoursEl = $("#hours", promoContainer);
-  const minutesEl = $("#minutes", promoContainer);
-  const secondsEl = $("#seconds", promoContainer);
+  const days = $("#days", promo);
+  const hours = $("#hours", promo);
+  const mins = $("#minutes", promo);
+  const secs = $("#seconds", promo);
 
-  function updatePromoTimer() {
-    const diff = promoEnd - new Date();
+  function update() {
+    const diff = end - new Date();
     if (diff <= 0) {
-      promoContainer.innerHTML = `<p class="ended-text">🎉 Promo has ended!</p>`;
-      clearInterval(timer);
+      promo.innerHTML = `<p class="ended-text">Promo ended!</p>`;
       return;
     }
-
-    const days = Math.floor(diff / (1000 * 60 * 60 * 24));
-    const hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
-    const mins = Math.floor((diff / (1000 * 60)) % 60);
-    const secs = Math.floor((diff / 1000) % 60);
-
-    daysEl.textContent = days.toString().padStart(2, "0");
-    hoursEl.textContent = hours.toString().padStart(2, "0");
-    minutesEl.textContent = mins.toString().padStart(2, "0");
-    secondsEl.textContent = secs.toString().padStart(2, "0");
+    days.textContent = String(Math.floor(diff / (86400000))).padStart(2, "0");
+    hours.textContent = String(Math.floor((diff / 3600000) % 24)).padStart(2, "0");
+    mins.textContent = String(Math.floor((diff / 60000) % 60)).padStart(2, "0");
+    secs.textContent = String(Math.floor((diff / 1000) % 60)).padStart(2, "0");
   }
 
-  updatePromoTimer();
-  const timer = setInterval(updatePromoTimer, 1000);
+  update();
+  setInterval(update, 1000);
 }
 
-// ================= INITIALIZATION =================
+// ================== MOBILE NAV ==================
+function initMobileNav() {
+  const toggle = $(".menu-toggle");
+  const nav = $(".navbar");
+  if (!toggle || !nav) return;
+  toggle.addEventListener("click", () => {
+    nav.classList.toggle("active");
+    toggle.classList.toggle("open");
+  });
+  nav.querySelectorAll("a").forEach((link) =>
+    link.addEventListener("click", () => nav.classList.remove("active"))
+  );
+}
+
+// ================== DOM READY ==================
 document.addEventListener("DOMContentLoaded", () => {
-  state.cart = {};
-  renderProductsDynamic();
+  loadCartFromStorage();
+  renderProductsDynamic(); // Categories page only
+  initHomeSlider();        // Index page only
   renderCart();
   initCartDelegation();
   initCheckoutForm();
-  staggerAppear(".hero h1, .hero p", 0.2);
-  staggerAppear(".contact-form, .contact-info", 0.25);
-  animateOnScroll();
-  initPromoTimer();
   initHeroFloating();
-
-  // ===== MOBILE MENU LOGIC =====
-  const menuToggle = document.querySelector(".menu-toggle");
-  const navbar = document.querySelector(".navbar");
-
-  if (menuToggle && navbar) {
-    menuToggle.addEventListener("click", () => {
-      navbar.classList.toggle("active");
-      menuToggle.classList.toggle("open");
-    });
-
-    // Close menu automatically when a link is clicked
-    navbar.querySelectorAll("a").forEach((link) =>
-      link.addEventListener("click", () => navbar.classList.remove("active"))
-    );
-  }
+  initPromoTimer();
+  initMobileNav();
 });
 
-window.addEventListener("scroll", animateOnScroll);
-window.addEventListener("scroll", heroParallax);
+// FEATURED PRODUCTS NAVIGATION
+const featGrid = document.querySelector(".products-grid.scrollable");
+const featPrev = document.getElementById("featPrev");
+const featNext = document.getElementById("featNext");
+
+if (featGrid) {
+  featPrev.addEventListener("click", () => {
+    featGrid.scrollBy({ left: -300, behavior: "smooth" });
+  });
+
+  featNext.addEventListener("click", () => {
+    featGrid.scrollBy({ left: 300, behavior: "smooth" });
+  });
+}
+
