@@ -1,4 +1,3 @@
-<!-- success.html -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -25,91 +24,41 @@
       text-align: center;
     }
 
-    /* SUCCESS MESSAGE */
-    .success-message {
-      margin-bottom: 40px;
-      animation: fadeUp 1.2s ease forwards;
-    }
-
     .success-message h1 {
       font-family: 'Playfair Display', serif;
       font-size: 1.8rem;
       color: #ffb703;
       margin-bottom: 12px;
-      letter-spacing: 1px;
-      animation: glowText 2s ease-in-out infinite alternate;
     }
 
-    .success-message p {
-      font-size: 0.95rem;
-      color: #cfcfcf;
-      opacity: 0.9;
-      animation: fadeUp 1.5s ease forwards;
-      animation-delay: 0.2s;
-    }
-
-    /* CHECK ICON */
     .checkmark {
       font-size: 70px;
       color: #ffb703;
-      background: rgba(255, 183, 3, 0.1);
-      border-radius: 50%;
-      padding: 20px;
       margin-bottom: 20px;
-      animation: popIn 1s ease-out;
     }
 
-    /* SUMMARY CARD */
     .summary {
-      background: rgba(255, 255, 255, 0.04);
-      border: 1px solid rgba(255, 255, 255, 0.1);
+      background: rgba(255,255,255,0.04);
       border-radius: 16px;
       padding: 30px;
-      box-shadow: 0 6px 24px rgba(0,0,0,0.3);
       width: min(800px, 95%);
       text-align: left;
-      animation: fadeUp 1.5s ease forwards;
-      animation-delay: 0.4s;
-      backdrop-filter: blur(8px);
-    }
-
-    .summary h2 {
-      color: #ffb703;
-      font-size: 1.4rem;
-      margin-bottom: 10px;
-      font-family: 'Playfair Display', serif;
-      border-bottom: 1px solid rgba(255,255,255,0.1);
-      padding-bottom: 8px;
-    }
-
-    .summary p {
-      font-size: 0.9rem;
-      color: #ddd;
-      margin-bottom: 6px;
     }
 
     table {
       width: 100%;
+      margin-top: 15px;
       border-collapse: collapse;
-      margin-top: 14px;
+    }
+
+    th, td {
+      padding: 10px;
       font-size: 0.9rem;
     }
 
-    table th, table td {
-      padding: 10px;
-      text-align: left;
-    }
-
-    table th {
+    th {
       background: #111;
       color: #ffb703;
-      text-transform: uppercase;
-      font-size: 0.85rem;
-      letter-spacing: 0.5px;
-    }
-
-    table tr:nth-child(even) {
-      background: rgba(255,255,255,0.05);
     }
 
     .totals td {
@@ -123,172 +72,115 @@
       padding: 12px 28px;
       background: #ffb703;
       color: #111;
-      font-weight: 600;
       border-radius: 12px;
-      text-align: center;
-      transition: background 0.3s ease, transform 0.3s ease;
+      text-decoration: none;
+      font-weight: 600;
     }
 
-    .btn-back:hover {
-      background: #e0a106;
-      transform: translateY(-3px);
+    .pending {
+      color: #ffb703;
+      font-weight: bold;
+      margin-top: 20px;
     }
 
-    /* ERROR MESSAGE */
     .error {
       color: #ff6b6b;
       font-weight: bold;
-      margin-top: 30px;
-      text-align: center;
-    }
-
-    /* ANIMATIONS */
-    @keyframes fadeUp {
-      from { opacity: 0; transform: translateY(20px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-
-    @keyframes popIn {
-      0% { transform: scale(0); opacity: 0; }
-      60% { transform: scale(1.15); opacity: 1; }
-      100% { transform: scale(1); }
-    }
-
-    @keyframes glowText {
-      0% { text-shadow: 0 0 10px rgba(255,183,3,0.4); }
-      100% { text-shadow: 0 0 25px rgba(255,183,3,0.8); }
-    }
-
-    @media (max-width: 768px) {
-      .summary { padding: 20px; }
-      .success-message h1 { font-size: 1.5rem; }
-      table th, table td { font-size: 0.8rem; }
+      margin-top: 20px;
     }
   </style>
 </head>
 
-<body>
-  <header class="header">
-    <div class="container nav-container">
-      <div class="logo">
-        <a href="index.html"><img src="images/logo.png" alt="Company Logo" /></a>
-      </div>
-      <nav class="navbar">
-        <ul>
-          <li><a href="/">Home</a></li>
-          <li><a href="/shop">Shop</a></li>
-          <li><a href="/contact">Contact</a></li>
-        </ul>
-      </nav>
-    </div>
-  </header>
+<body class="success-page">
 
-  <div class="success-wrapper">
-    <div class="checkmark">✔️</div>
-    <div class="success-message">
-      <h1>Thank You for Your Purchase!</h1>
-      <p>Your order has been received and is being carefully prepared.</p>
+<header class="header">
+  <div class="container nav-container">
+    <div class="logo">
+      <a href="index.html"><img src="images/logo.png"></a>
     </div>
+  </div>
+</header>
 
-    <div id="orderDetails" class="error">⚙️ Loading your order details...</div>
+<div class="success-wrapper">
+  <div class="checkmark">✔️</div>
+
+  <div class="success-message">
+    <h1>Thank You for Your Purchase!</h1>
+    <p id="statusText" class="pending">Confirming your payment…</p>
   </div>
 
-  <footer>
-    <div class="footer-container">
-      <div class="footer-col">
-        <h4>About</h4>
-        <ul>
-          <li><a href="/about">Our Story</a></li>
-          <li><a href="/contact">Contact</a></li>
-        </ul>
-      </div>
-      <div class="footer-col">
-        <h4>Follow Us</h4>
-        <div class="footer-social">
-          <a href="#"><i class="fab fa-facebook-f"></i></a>
-          <a href="#"><i class="fab fa-instagram"></i></a>
-          <a href="#"><i class="fab fa-twitter"></i></a>
-        </div>
-      </div>
-    </div>
-    <div class="sub-footer">© 2025 Luminous Candles Ltd. All rights reserved.</div>
-  </footer>
+  <div id="orderDetails"></div>
+</div>
 
-  <script>
-  (async function() {
-    const orderDetailsDiv = document.getElementById("orderDetails");
-    const urlParams = new URLSearchParams(window.location.search);
-    const checkoutId = urlParams.get("checkoutId");
+<script>
+const API_URL = "https://iluminous-candle-uk-be.onrender.com";
+const orderId = localStorage.getItem("lumina_last_order_id");
+const statusText = document.getElementById("statusText");
+const detailsDiv = document.getElementById("orderDetails");
 
-    if (!checkoutId) {
-      orderDetailsDiv.innerHTML = "⚠️ Missing checkout ID.";
-      return;
-    }
+if (!orderId) {
+  statusText.textContent = "⚠️ Order reference missing.";
+  statusText.className = "error";
+}
 
+/* ================== POLL ORDER STATUS ================== */
+async function pollOrder() {
+  for (let attempt = 0; attempt < 12; attempt++) {
     try {
-      const response = await fetch(`https://iluminous-candle-uk-be.onrender.com/order/${checkoutId}`);
-      if (!response.ok) throw new Error("Order not found");
+      const res = await fetch(`${API_URL}/order/${orderId}`);
+      if (!res.ok) throw new Error();
 
-      const order = await response.json();
+      const data = await res.json();
 
-      const itemsHtml = order.cart.map(item => `
-        <tr>
-          <td>${item.name}</td>
-          <td>${item.qty}</td>
-          <td>£${item.price.toFixed(2)}</td>
-          <td>£${(item.price * item.qty).toFixed(2)}</td>
-        </tr>
-      `).join("");
+      if (data.order.status === "PAID") {
+        renderOrder(data);
+        localStorage.removeItem("lumina_cart");
+        return;
+      }
+    } catch {}
 
-      orderDetailsDiv.classList.remove("error");
-      orderDetailsDiv.innerHTML = `
-        <div class="summary">
-          <h2>Order Summary</h2>
-          <p><strong>Name:</strong> ${order.customer.fullName}</p>
-          <p><strong>Email:</strong> ${order.customer.email}</p>
-          <table>
-            <thead>
-              <tr><th>Item</th><th>Qty</th><th>Price</th><th>Subtotal</th></tr>
-            </thead>
-            <tbody>${itemsHtml}</tbody>
-            <tfoot>
-              <tr class="totals"><td colspan="3">Subtotal</td><td>£${order.subtotal.toFixed(2)}</td></tr>
-              <tr class="totals"><td colspan="3">Shipping</td><td>£${order.shipping.toFixed(2)}</td></tr>
-              <tr class="totals"><td colspan="3">Total Paid</td><td>£${order.total.toFixed(2)}</td></tr>
-            </tfoot>
-          </table>
+    await new Promise(r => setTimeout(r, 1500));
+  }
 
-          <h3>Shipping Info</h3>
-          <p>${order.customer.address}<br>
-             ${order.customer.city}, ${order.customer.state} ${order.customer.zip}<br>
-             ${order.customer.country}<br>
-             Phone: ${order.customer.phone}</p>
+  statusText.textContent = "Payment is still processing. Please refresh shortly.";
+}
 
-          <a href="categories.html" class="btn-back">← Continue Shopping</a>
-        </div>
-      `;
+/* ================== RENDER ORDER ================== */
+function renderOrder(data) {
+  statusText.textContent = "Payment confirmed 🎉";
 
-      const payload = {
-        customer: order.customer,
-        cart: order.cart,
-        total: order.total,
-        checkoutId: order.id,
-        client_email: order.customer.email
-      };
+  const rows = data.items.map(i => `
+    <tr>
+      <td>${i.product_name}</td>
+      <td>${i.quantity}</td>
+      <td>£${i.price.toFixed(2)}</td>
+      <td>£${(i.price * i.quantity).toFixed(2)}</td>
+    </tr>
+  `).join("");
 
-      await fetch("https://iluminous-candle-uk-be.onrender.com/payment-success", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(payload)
-      });
+  detailsDiv.innerHTML = `
+    <div class="summary">
+      <h2>Order Summary</h2>
+      <p><strong>Name:</strong> ${data.order.customer_name}</p>
+      <p><strong>Email:</strong> ${data.order.email}</p>
 
-      localStorage.removeItem("lumina_cart");
+      <table>
+        <thead>
+          <tr><th>Item</th><th>Qty</th><th>Price</th><th>Total</th></tr>
+        </thead>
+        <tbody>${rows}</tbody>
+        <tfoot>
+          <tr class="totals"><td colspan="3">Total Paid</td><td>£${data.order.total}</td></tr>
+        </tfoot>
+      </table>
 
-    } catch (err) {
-      console.error(err);
-      orderDetailsDiv.innerHTML = "⚠️ Could not load order details.";
-    }
-  })();
-  </script>
+      <a href="categories.html" class="btn-back">← Continue Shopping</a>
+    </div>
+  `;
+}
+
+pollOrder();
+</script>
+
 </body>
 </html>

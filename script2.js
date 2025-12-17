@@ -339,16 +339,12 @@ function initCheckoutForm() {
 
     localStorage.setItem("lumina_customer", JSON.stringify(customer));
 
-    const subtotal = cartItems.reduce((a, b) => a + b.qty * b.price, 0);
-    const shipping = subtotal > 50 ? 0 : 5.99;
-
     const payload = {
       customer,
       cart: cartItems,
-      total: Number(subtotal + shipping),
     };
 
-    toast("Processing payment...");
+    toast("Redirecting to secure payment…");
 
     try {
       const res = await fetch(`${API_URL}/create-checkout-session`, {
@@ -358,13 +354,20 @@ function initCheckoutForm() {
       });
 
       const data = await res.json();
-      if (data.url) window.location.href = data.url;
-      else toast("Checkout failed.");
+
+      if (data.url && data.orderId) {
+        // ✅ STORE ORDER ID FOR SUCCESS PAGE
+        localStorage.setItem("lumina_last_order_id", data.orderId);
+        window.location.href = data.url;
+      } else {
+        toast("Checkout failed. Please try again.");
+      }
     } catch (err) {
-      toast("Payment error: " + err.message);
+      toast("Payment error. Please retry.");
     }
   });
 }
+
 
 // ================== HERO FLOATING TEXT ==================
 function initHeroFloating() {
@@ -425,15 +428,21 @@ function initMobileNav() {
 // ================== DOM READY ==================
 document.addEventListener("DOMContentLoaded", () => {
   loadCartFromStorage();
-  renderProductsDynamic(); // Categories page only
-  initHomeSlider();        // Index page only
+  renderProductsDynamic();
+  initHomeSlider();
   renderCart();
   initCartDelegation();
   initCheckoutForm();
   initHeroFloating();
   initPromoTimer();
   initMobileNav();
+
+  // ✅ Only runs on success.html
+  if (document.body.classList.contains("success-page")) {
+    initSuccessPage();
+  }
 });
+
 
 // FEATURED PRODUCTS NAVIGATION
 const featGrid = document.querySelector(".products-grid.scrollable");
